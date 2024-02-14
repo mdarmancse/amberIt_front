@@ -39,6 +39,6 @@ const appConfig: AppConfig = {
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/app/account/kyc-form',
     locale: 'en',
-    enableMock: false,
+    enableMock: false, 
 }
 export default appConfig
