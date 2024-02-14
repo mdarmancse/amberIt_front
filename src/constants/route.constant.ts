@@ -1,0 +1,6 @@
+export const ROOT = '/'
+export const APP_PREFIX_PATH = '/app'
+export const SETTING_PREFIX_PATH = '/settings'
+export const AUTH_PREFIX_PATH = '/auth'
+export const PAGES_PREFIX_PATH = '/pages'
+export const REPORT_PREFIX_PATH = '/reports'

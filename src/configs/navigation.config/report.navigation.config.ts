@@ -1,0 +1,126 @@
+import { REPORT_PREFIX_PATH } from '@/constants/route.constant'
+import {
+    NAV_ITEM_TYPE_TITLE,
+    NAV_ITEM_TYPE_COLLAPSE,
+    NAV_ITEM_TYPE_ITEM,
+} from '@/constants/navigation.constant'
+import { ADMIN, EDITOR, MANAGER, SUPER_ADMIN } from '@/constants/roles.constant'
+import type { NavigationTree } from '@/@types/navigation'
+
+const reportsNavigationConfig: NavigationTree[] = [
+    {
+        key: 'reports',
+        path: '',
+        title: 'Reports',
+        menu_id: ["18","19","20","21","22","23","24"],
+        purpose:["create","read","edit","delete"],
+        translateKey: 'nav.reports',
+        icon: '',
+        type: NAV_ITEM_TYPE_TITLE,
+        authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+        subMenu: [
+            {
+                key: 'reports.contentViewsDateWise',
+                menu_id: ["18"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/content-views`,
+                title: 'nav.appsReports.contentViewsDateWise',
+                translateKey: 'nav.appsReports.contentViewsDateWise',
+                icon: 'contentViews',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+
+            {
+                key: 'reports.usersLoginHits',
+                menu_id: ["19"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/login-log`,
+                title: 'nav.appsReports.usersLoginHits',
+                translateKey: 'nav.appsReports.usersLoginHits',
+                icon: 'userLoginLog',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+            {
+                key: 'reports.conCurrentUser',
+                menu_id: ["20"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/con-current-user`,
+                title: 'nav.appsReports.conCurrentUser',
+                translateKey: 'nav.appsReports.conCurrentUser',
+                icon: 'conCurrent',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+            {
+                key: 'reports.uniqueUserMonthly',
+                menu_id: ["21"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/unique-user-monthly`,
+                title: 'nav.appsReports.uniqueUserMonthly',
+                translateKey: 'nav.appsReports.uniqueUserMonthly',
+                icon: 'uniqueUserMonthly',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+            {
+                key: 'reports.uniqueUserDaily',
+                menu_id: ["22"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/unique-user-daily`,
+                title: 'nav.appsReports.uniqueUserDaily',
+                translateKey: 'nav.appsReports.uniqueUserDaily',
+                icon: 'uniqueUserDaily',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+
+            {
+                key: 'reports.liveAudience',
+                menu_id: ["23"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/live-audience-daily`,
+                title: 'nav.appsReports.liveAudience',
+                translateKey: 'nav.appsReports.liveAudience',
+                icon: 'liveAudience',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+            {
+                key: 'reports.paymentReport',
+                menu_id: ["24"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/payment-report`,
+                title: 'nav.appsReports.paymentReport',
+                translateKey: 'nav.appsReports.paymentReport',
+                icon: 'paymentReport',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+            {
+                key: 'reports.auditReport',
+                menu_id: ["31"],
+                purpose: ["read"],
+                path: `${REPORT_PREFIX_PATH}/audit-report`,
+                title: 'nav.appsReports.auditReport',
+                translateKey: 'nav.appsReports.auditReport',
+                icon: 'auditReport',
+                type: NAV_ITEM_TYPE_COLLAPSE,
+                authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+                subMenu: [],
+            },
+
+
+        ],
+    },
+]
+
+export default reportsNavigationConfig

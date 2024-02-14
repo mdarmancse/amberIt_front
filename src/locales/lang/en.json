@@ -1,0 +1,96 @@
+{
+    "nav": {
+        "apps": "Apps",
+        "home": "Home",
+        "settings": "Settings",
+        "reports": "Reports",
+        "appsHomes": {
+            "dashboard": "Dashboard",
+            "menus": "Menus",
+            "contents": "Contents",
+            "categories": "Categories",
+            "push-notification": "Push Notification"
+        },
+        "menus": {
+            "menu-create": "Create Menu",
+            "menu-list": "Menus"
+        },
+        "contents": {
+            "liveChannel": "Live/Linear Channel",
+            "vod": "VOD Contents",
+            "featured": "Featured Contents"
+        },
+        "categories": {
+            "category-create": "Create Category",
+            "category-list": "Categories",
+            "sub-category-list": "Sub Categories"
+        },
+        "fcm": {
+            "notification-create": "Create Notification",
+            "notification-list": "Notification List",
+            "send-notification": "Send Notification"
+        },
+        "appsSettings": {
+            "users": "Users",
+            "roles": "Roles",
+            "rolesPermission": "Roles & Permission",
+            "dbVersion": "DB Version",
+            "acl": "Access Control List"
+        },
+        "appsReports": {
+            "contentViewsDateWise": "Content Views",
+            "usersLoginHits": "Users login and hits",
+            "conCurrentUser": "Con Current Users",
+            "uniqueUserMonthly": "Unique User (Monthly)",
+            "uniqueUserDaily": "Unique User (Daily)",
+            "liveAudience": "Live Audience",
+            "paymentReport": "Payment Report",
+            "auditReport": "Audit Report"
+        },
+
+        "users": {
+            "user-create": "Create User",
+            "user-list": "User List"
+        },
+
+        "roles": {
+            "role-create": "Create Role",
+            "role-list": "Role List"
+        },
+
+        "appsSales": {
+            "sales": "Sales",
+            "dashboard": "Dashboard",
+            "productList": "Product List",
+            "productEdit": "Product Edit",
+            "productNew": "New Product",
+            "orderList": "Order List",
+            "orderDetails": "Order Details"
+        },
+        "pages": {
+            "pages": "Pages",
+            "welcome": "Welcome",
+            "accessDenied": "Access Denied"
+        },
+
+        "authentication": {
+            "authentication": "Authentication",
+            "signIn": "Sign In",
+            "signInSimple": "Simple",
+            "signInSide": "Side",
+            "signInCover": "Cover",
+            "signUp": "Sign Up",
+            "signUpSimple": "Simple",
+            "signUpSide": "Side",
+            "signUpCover": "Cover",
+            "forgotPassword": "Forgot Password",
+            "forgotPasswordSimple": "Simple",
+            "forgotPasswordSide": "Side",
+            "forgotPasswordCover": "Cover",
+            "resetPassword": "Reset Password",
+            "resetPasswordSimple": "Simple",
+            "resetPasswordSide": "Side",
+            "resetPasswordCover": "Cover"
+        }
+    }
+}
