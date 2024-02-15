@@ -132,7 +132,7 @@ const NameColumn = ({ row }: { row: any }) => {
     const navigate = useNavigate();
     const [isExpanded, setIsExpanded] = useState(false);
 
-    if (!row.title) {
+    if (!row?.title) {
         return null; // If title is not defined, you can choose to render nothing or provide a default value
     }
 

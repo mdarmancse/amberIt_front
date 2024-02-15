@@ -1,5 +1,5 @@
 import Side from './Side'
-// import Cover from './Cover'
+ import Cover from './Cover'
 // import Simple from './Simple'
 import View from '@/views'
 import { useAppSelector } from '@/store'
@@ -13,9 +13,9 @@ const AuthLayout = () => {
             {layoutType === LAYOUT_TYPE_BLANK ? (
                 <View />
             ) : (
-                <Side>
+                <Cover>
                     <View />
-                </Side>
+                </Cover>
             )}
         </div>
     )

@@ -35,7 +35,7 @@ const GraphReport = () => {
         })
     )
 
-    const categories = hourlyGraphReport?.value[0].data.map(
+    const categories = hourlyGraphReport?.value[0]?.data.map(
         (entry: { hour: any }) => entry.hour
     )
 

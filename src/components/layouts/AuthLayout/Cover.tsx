@@ -10,36 +10,31 @@ interface CoverProps extends CommonProps {
 
 const Cover = ({ children, content, ...rest }: CoverProps) => {
     return (
-        <div className="grid lg:grid-cols-3 h-full">
+        <div className="grid lg:grid-cols-12 h-full">
+
             <div
-                className="col-span-2 bg-no-repeat bg-cover py-6 px-16 flex-col justify-between bg-white dark:bg-gray-800 hidden lg:flex"
+                className="col-span-6 bg-no-repeat bg-cover py-6 px-16 flex-col justify-between bg-white dark:bg-gray-800 hidden lg:flex"
+                // className="bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
                 style={{
-                    backgroundImage: `url('/img/others/auth-cover-bg.jpg')`,
+                    backgroundImage: `url('/img/others/auth-cover-bg.webp')`,
                 }}
             >
-                <Logo mode="dark" />
-                <div>
-                    <h3 className="text-white mb-4">
-                        Jump start your project with Elstar
-                    </h3>
-                    <p className="text-lg text-white opacity-80 max-w-[700px]">
-                        Elstar comes with a complete set of UI components
-                        crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
-                    </p>
-                </div>
-                <span className="text-white">
-                    Copyright &copy; {`${new Date().getFullYear()}`}{' '}
-                    <span className="font-semibold">{`${APP_NAME}`}</span>{' '}
-                </span>
+
+
             </div>
-            <div className="flex flex-col justify-center items-center bg-white dark:bg-gray-800">
+            <div className="col-span-6 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
                 <div className="xl:min-w-[450px] px-8">
+                    <Logo mode="dark" />
                     <div className="mb-8">{content}</div>
                     {children
                         ? cloneElement(children as ReactElement, { ...rest })
                         : null}
+
                 </div>
+                <span className="text-grey mt-10">
+                    Copyright &copy; {`${new Date().getFullYear()}`}{' '}
+                    <span className="font-semibold">{`${APP_NAME}`}</span>{' '}
+                      </span>
             </div>
         </div>
     )

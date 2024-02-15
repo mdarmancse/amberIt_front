@@ -16,6 +16,8 @@ module.exports = {
 		theme: {
 			fontFamily: {
 				sans: [
+					'Poppins',
+					'Rubik',
 					'Inter',
 					'ui-sans-serif',
 					'system-ui',
@@ -50,6 +52,9 @@ module.exports = {
 					'"Courier New"',
 					'monospace',
 				],
+				rubik:[
+					'Rubik','sans-serif'
+				]
 			},
 			screens: {
 				xs: '576',

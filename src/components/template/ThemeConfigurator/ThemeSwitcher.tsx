@@ -42,6 +42,7 @@ const colorList: ColorList[] = [
     { label: 'Fuchsia', value: 'fuchsia' },
     { label: 'Pink', value: 'pink' },
     { label: 'Rose', value: 'rose' },
+    // { label: 'Amber', value: '#d21e2b' },
 ]
 
 const colorLevelList: ColorLevelList[] = [

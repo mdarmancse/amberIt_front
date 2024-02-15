@@ -18,14 +18,16 @@ const Logo = (props: LogoProps) => {
         className,
         imgClass,
         style,
-        logoWidth = '55%',
+         // logoWidth = '44%',
+         logoWidth = 'auto',
+
     } = props
 
     const containerStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        // Add any additional styling for the container here
+        // Add any ;additional styling for the container here
     }
 
     return (
@@ -39,6 +41,7 @@ const Logo = (props: LogoProps) => {
                 alt={`${APP_NAME} logo`}
                 style={{
                     width: logoWidth,
+                    padding:'3%'
                     // Add any additional styling for the logo here
                 }}
             />

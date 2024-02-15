@@ -106,8 +106,8 @@ const ReportContent = () => {
                                 <ReactJsonViewCompare oldData={data.old_data??[]} newData={data.new_data??[]} />
                             </div>
                         ) : (
-                            <div className="border rounded-lg p-4">
-                                <h6 className="text-lg font-semibold">Changes show only for update & craeate event</h6>
+                            <div className="border rounded-lg p-4 bg-red-200">
+                                <h6 className="text-lg font-semibold">Changes show only for update & create event.</h6>
                             </div>
                         )}
 
