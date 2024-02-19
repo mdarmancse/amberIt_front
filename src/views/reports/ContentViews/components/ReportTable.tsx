@@ -52,7 +52,7 @@ const NameColumn = ({ row }: { row: Data }) => {
     return (
         <span
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
-            onClick={onView}
+           // onClick={onView}
         >
             {row.title}
         </span>

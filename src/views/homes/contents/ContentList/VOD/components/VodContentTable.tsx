@@ -26,6 +26,7 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Data = {
+    content_file_name: string
     id: number
     is_approved: boolean
     is_active: boolean
@@ -56,6 +57,26 @@ const transcodedColor: Record<
         label: 'Pending',
         dotClass: 'bg-amber-500',
         textClass: 'text-amber-500',
+    },
+}
+
+const vodStatusColor: Record<
+    number,
+    {
+        label: string
+        dotClass: string
+        textClass: string
+    }
+> = {
+    1: {
+        label: 'Upload Success',
+        dotClass: 'bg-emerald-500',
+        textClass: 'text-emerald-500',
+    },
+    0: {
+        label: 'Upload Failed',
+        dotClass: 'bg-red-500',
+        textClass: 'text-red-500',
     },
 }
 const premiumColor: Record<
@@ -279,6 +300,34 @@ const VodContentTable = () => {
                                 className={`ml-2 rtl:mr-2 capitalize font-semibold ${transcodedColor[is_transcoded].textClass}`}
                             >
                                 {transcodedColor[is_transcoded].label}
+                            </span>
+                        </div>
+                    )
+                },
+            },
+
+            {
+                header: 'VOD Status',
+                accessorKey: 'status',
+                cell: (props) => {
+                    const row = props.row.original
+                    // const is_transcoded=Number(row.is_premium)
+                    const success =
+                        row.content_file_name
+                            ? 1
+                            : 0
+
+                    return (
+                        <div className="flex items-center">
+                            <Badge
+                                className={
+                                    vodStatusColor[success].dotClass
+                                }
+                            />
+                            <span
+                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${vodStatusColor[success].textClass}`}
+                            >
+                                {vodStatusColor[success].label}
                             </span>
                         </div>
                     )

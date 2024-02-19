@@ -55,6 +55,8 @@ type FilterQueries = {
     log_name: string
     subject_type:string
     causer_id:string
+    pageIndex: number,
+    pageSize: number,
 }
 type Datas = Data[]
 
@@ -191,6 +193,9 @@ const initialState: ListState = {
         log_name: '',
         subject_type:'',
         causer_id:'',
+        pageIndex: 1,
+        pageSize: 10,
+
     },
     selectedRows: [],
     selectedRow: '',

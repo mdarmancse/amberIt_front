@@ -35,8 +35,9 @@ type Data = {
     notification_title: string
     notification_text: string
     thumbnail: string
+    fcm_success_message_id: string
 }
-const transcodedColor: Record<
+const StatusColor: Record<
     number,
     {
         label: string
@@ -45,14 +46,14 @@ const transcodedColor: Record<
     }
 > = {
     1: {
-        label: 'Done',
+        label: 'Success',
         dotClass: 'bg-emerald-500',
         textClass: 'text-emerald-500',
     },
     0: {
-        label: 'Pending',
-        dotClass: 'bg-amber-500',
-        textClass: 'text-amber-500',
+        label: 'Failed',
+        dotClass: 'bg-red-500',
+        textClass: 'text-red-500',
     },
 }
 
@@ -67,7 +68,7 @@ const NameColumn = ({ row }: { row: Data }) => {
     return (
         <span
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
-            onClick={onView}
+        //   onClick={onView}
         >
             {row.notification_title}
         </span>
@@ -195,6 +196,36 @@ const NotificationTable = () => {
                     )
                 },
             },
+
+            {
+                header: 'Status',
+                accessorKey: 'status',
+                cell: (props) => {
+                    const row = props.row.original
+                    // const is_transcoded=Number(row.is_premium)
+                    const success =
+                        row.fcm_success_message_id
+                            ? 1
+                            : 0
+
+                    return (
+                        <div className="flex items-center">
+                            <Badge
+                                className={
+                                    StatusColor[success].dotClass
+                                }
+                            />
+                            <span
+                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${StatusColor[success].textClass}`}
+                            >
+                                {StatusColor[success].label}
+                            </span>
+                        </div>
+                    )
+                },
+            },
+
+
 
             {
                 header: 'Thumbnail',
