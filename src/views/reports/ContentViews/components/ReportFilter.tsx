@@ -1,12 +1,6 @@
 import { useState, useRef, forwardRef } from 'react'
-import { HiCheck, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
-import {
-    getContentViewsReport,
-    setFilterData,
-    initialTableData,
-    useAppDispatch,
-    useAppSelector,
-} from './../../store'
+import { HiCheck, HiOutlineFilter } from 'react-icons/hi'
+import { setFilterData, useAppDispatch, useAppSelector } from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -93,11 +87,14 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.contentViewReportList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
+            // dispatch(setTableData({ pageIndex:1,
+            //     pageSize:10,
+            // }))
             dispatch(setFilterData(values))
             //dispatch(getContentViewsReport(initialTableData))
         }
@@ -105,9 +102,11 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         return (
             <Formik
                 enableReinitialize
+                //@ts-ignore
                 innerRef={ref}
                 initialValues={filterData}
                 onSubmit={(values) => {
+                    //@ts-ignore
                     handleSubmit(values)
                 }}
             >

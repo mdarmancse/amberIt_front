@@ -1,11 +1,12 @@
 import { useEffect, useCallback } from 'react'
 
 import {
-    getLiveAudienceDailyReport, getLPaymentReport,
+    // eslint-disable-next-line import/named
+    getLPaymentReport,
     updateLoading,
     useAppDispatch,
-    useAppSelector
-} from '../../store'
+    useAppSelector,
+} from '../store'
 
 import { Loading } from '@/components/shared'
 import { Card } from '@/components/ui'
@@ -16,21 +17,25 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.paymentReportList.data.tableData
     )
 
     const { start_date, end_date } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+        (state) => state.paymentReportList.data.filterData
     )
 
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
+    const loading = useAppSelector(
+        (state) => state.paymentReportList.data.loading
+    )
 
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector(
+        (state) => state.paymentReportList.data.dataList
+    )
 
-    const fetchData = useCallback( () => {
+    const fetchData = useCallback(() => {
         dispatch(updateLoading({ loading: true }))
 
-         dispatch(
+        dispatch(
             getLPaymentReport({
                 start_date,
                 end_date,
@@ -45,8 +50,6 @@ const ReportTable = () => {
         fetchData()
     }, [dispatch, fetchData, pageIndex, pageSize, sort, start_date, end_date])
 
-
-
     const sum = (a: number, b: number) => {
         return a + b
     }
@@ -57,8 +60,13 @@ const ReportTable = () => {
                     {data && Array.isArray(data) && data.length > 0 && (
                         <div className="grid grid-cols-1 md:grid-cols-2 p-4 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {data.map((item, index) => (
-                                <Card key={index} className="bg-white p-4 rounded-lg shadow-md">
-                                    <h6 className="font-semibold mb-4 text-sm whitespace-nowrap">{item.title}</h6>
+                                <Card
+                                    key={index}
+                                    className="bg-white p-4 rounded-lg shadow-md"
+                                >
+                                    <h6 className="font-semibold mb-4 text-sm whitespace-nowrap">
+                                        {item.title}
+                                    </h6>
                                     <div className="flex flex-col h-full">
                                         <div className="flex justify-between items-center mb-2">
                                             <div>
@@ -73,12 +81,19 @@ const ReportTable = () => {
                                                             const hour =
                                                                 item?.usage_hour +
                                                                 ':00 - ' +
-                                                                sum(Number(item?.usage_hour), 1) +
-                                                                ':00';
+                                                                sum(
+                                                                    Number(
+                                                                        item?.usage_hour
+                                                                    ),
+                                                                    1
+                                                                ) +
+                                                                ':00'
 
                                                             return (
-                                                                <span className="text-xs whitespace-nowrap">({hour})</span>
-                                                            );
+                                                                <span className="text-xs whitespace-nowrap">
+                                                                    ({hour})
+                                                                </span>
+                                                            )
                                                         })()}
                                                     </div>
                                                 )}
@@ -89,7 +104,9 @@ const ReportTable = () => {
                                                 <hr />
                                                 <div className="flex items-center">
                                                     <HiOutlineInformationCircle className="cursor-pointer mr-2" />
-                                                    <span className="text-xs whitespace-nowrap">{item.note}</span>
+                                                    <span className="text-xs whitespace-nowrap">
+                                                        {item.note}
+                                                    </span>
                                                 </div>
                                             </div>
                                         )}
@@ -98,18 +115,16 @@ const ReportTable = () => {
                             ))}
                         </div>
                     )}
-                    {!data || (Array.isArray(data) && data.length === 0) && (
-                        <p className="text-center w-full my-8 text-gray-500">
-                            No data available.
-                        </p>
-                    )}
+                    {!data ||
+                        (Array.isArray(data) && data.length === 0 && (
+                            <p className="text-center w-full my-8 text-gray-500">
+                                No data available.
+                            </p>
+                        ))}
                 </div>
             </Loading>
-
         </div>
-    );
-
-
+    )
 }
 
 export default ReportTable

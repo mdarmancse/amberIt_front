@@ -1,12 +1,7 @@
 import { useRef } from 'react'
 import Input from '@/components/ui/Input'
 import { HiOutlineSearch } from 'react-icons/hi'
-import {
-    getContentViewsReport,
-    setTableData,
-    useAppDispatch,
-    useAppSelector,
-} from '../../store'
+import { setTableData, useAppDispatch, useAppSelector } from '../store'
 import debounce from 'lodash/debounce'
 import cloneDeep from 'lodash/cloneDeep'
 import type { TableQueries } from '@/@types/common'
@@ -18,7 +13,7 @@ const ReportTableSearch = () => {
     const searchInput = useRef<HTMLInputElement>(null)
 
     const tableData = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.uniqueUserMonthlyReportList.data.tableData
     )
 
     const debounceFn = debounce(handleDebounceFn, 500)
@@ -38,7 +33,7 @@ const ReportTableSearch = () => {
 
     const fetchData = (data: TableQueries) => {
         dispatch(setTableData(data))
-        dispatch(getContentViewsReport(data))
+        //    dispatch(getContentViewsReport(data))
     }
 
     const onEdit = (e: ChangeEvent<HTMLInputElement>) => {

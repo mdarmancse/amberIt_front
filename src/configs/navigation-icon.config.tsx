@@ -21,10 +21,9 @@ import {
     HiOutlineTicket,
     HiOutlineViewBoards,
     HiOutlineEye,
-    HiOutlineDatabase, HiOutlineDocumentReport
+    HiOutlineDatabase, HiOutlineDocumentReport, HiOutlineStar, HiOutlineFolderAdd, HiOutlineInboxIn
 } from 'react-icons/hi'
 import {
-    HiOutlineBars3,
     HiOutlineBellAlert,
     HiOutlineListBullet
 } from 'react-icons/all'
@@ -64,6 +63,9 @@ const navigationIcon: NavigationIcons = {
     acl: <HiOutlineLockClosed />,
     paymentReport: <HiOutlineTicket />,
     auditReport: <HiOutlineDocumentReport />,
+    interest: <HiOutlineStar />,
+    movieRequest: <HiOutlineFolderAdd />,
+    contact: <HiOutlineInboxIn />,
 }
 
 export default navigationIcon

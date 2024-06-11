@@ -1,10 +1,10 @@
-import reducer from '../store'
+import reducer from './store'
 import { injectReducer } from '@/store'
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import ReportTableTools from './components/ReportTableTools'
 import ReportTable from './components/ReportTable'
 
-injectReducer('homeReportList', reducer)
+injectReducer('uniqueUserDailyReportList', reducer)
 
 const UniqueUserDaily = () => {
     return (

@@ -1,13 +1,13 @@
 import { useEffect, useCallback, useMemo, useRef, useState } from 'react'
 import DataTable from '@/components/shared/DataTable'
 import {
+    // eslint-disable-next-line import/named
     getContentViewsReport,
-    setFilterData,
     setTableData,
     updateLoading,
     useAppDispatch,
     useAppSelector,
-} from '../../store'
+} from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
@@ -52,7 +52,7 @@ const NameColumn = ({ row }: { row: Data }) => {
     return (
         <span
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
-           // onClick={onView}
+            onClick={onView}
         >
             {row.title}
         </span>
@@ -65,16 +65,20 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.contentViewReportList.data.tableData
     )
 
     const { start_date, end_date, type } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+        (state) => state.contentViewReportList.data.filterData
     )
 
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
+    const loading = useAppSelector(
+        (state) => state.contentViewReportList.data.loading
+    )
 
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector(
+        (state) => state.contentViewReportList.data.dataList
+    )
     useEffect(() => {
         // Reset sorting or perform other actions after the data has been fetched and state updated
         if (data && tableRef) {

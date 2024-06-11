@@ -1,28 +1,31 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Upload from '@/components/ui/Upload'
 
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import { FormItem } from '@/components/ui'
 import { Field, FieldInputProps, FieldProps, FormikProps } from 'formik'
-import { AiOutlineFrown, HiPhoto } from 'react-icons/all'
+
 import axios from 'axios'
 
 import appConfig from '@/configs/app.config'
+import { AiOutlineFrown } from 'react-icons/ai'
+import { HiPhoto } from 'react-icons/hi2'
 
 const url = appConfig.apiPrefix + '/upload-image-gcp'
 
 type Image = {
-    category_logo: string
+    stb_thumbnail: string
 }
 
 type FormModel = {
     imgList: Image[]
-    category_logo: string
+    stb_thumbnail: string
     [key: string]: unknown
 }
 type ImagesProps = {
     values: FormModel
+    setSubmitDisabled: Dispatch<SetStateAction<boolean>>
 }
 const SubCategoryImage = (props: ImagesProps) => {
     const { values } = props
@@ -94,11 +97,11 @@ const SubCategoryImage = (props: ImagesProps) => {
         return valid
     }
 
-    const fieldObjects = [{ label: 'Thumbnail', field: 'category_logo' }]
+    const fieldObjects = [{ label: 'Thumbnail', field: 'stb_thumbnail' }]
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Category Logo</h5>
+            <h5>Subcategory Thumbnail</h5>
             <p className=" mb-6 text-red-600 dark:text-white">
                 Support: JPEG, JPG, PNG | Max size: 2MB
             </p>

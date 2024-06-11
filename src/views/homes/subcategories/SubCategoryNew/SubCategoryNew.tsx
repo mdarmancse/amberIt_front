@@ -60,7 +60,7 @@ const SubCategoryNew = () => {
                 placement: 'top-center',
             }
         )
-     //   navigate('/app/subcategories/sub-category-new')
+        //   navigate('/app/subcategories/sub-category-new')
     }
 
     const handleDiscard = () => {

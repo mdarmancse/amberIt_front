@@ -1,12 +1,6 @@
 import { useState, useRef, forwardRef } from 'react'
-import { HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
-import {
-    getContentViewsReport,
-    setFilterData,
-    initialTableData,
-    useAppDispatch,
-    useAppSelector,
-} from './../../store'
+import { HiCheck, HiOutlineFilter } from 'react-icons/hi'
+import { setFilterData, useAppDispatch, useAppSelector } from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -17,8 +11,8 @@ import { DatePicker } from '@/components/ui'
 import { MAX_DATE_CALENDER } from '@/components/ui/utils/constants'
 
 type FormModel = {
-    start_date: string
-    end_date: string
+    start_date: string | number
+    end_date: string | number
 }
 
 type FilterFormProps = {
@@ -30,12 +24,13 @@ type DrawerFooterProps = {
     onCancel: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
+
 const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
     ({ onSubmitComplete }, ref) => {
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.uniqueUserDailyReportList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
@@ -49,80 +44,81 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                 enableReinitialize
                 innerRef={ref}
                 initialValues={filterData}
-                onSubmit={(values) => {
+                onSubmit={(values ) => {
                     handleSubmit(values)
                 }}
             >
                 {({ values, touched, errors }) => (
-                    <Form>
-                        <FormContainer>
-                            <FormItem
-                                invalid={
-                                    errors.start_date && touched.start_date
-                                }
-                                errorMessage={errors.start_date}
-                            >
-                                <h6 className="mb-4">Start Date</h6>
-                                <Field name="start_date">
-                                    {({ field, form }: FieldProps) => (
-                                        <DatePicker
-                                            field={field}
-                                            form={form}
-                                            maxDate={MAX_DATE_CALENDER}
-                                            value={
-                                                field.value
-                                                    ? new Date(field.value)
-                                                    : new Date()
-                                            }
-                                            placeholder="Start Date"
-                                            onChange={(date) => {
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    date instanceof Date
-                                                        ? dayjs(date).format(
-                                                              'YYYY-MM-DD'
-                                                          )
-                                                        : null
-                                                )
-                                            }}
-                                        />
-                                    )}
-                                </Field>
-                            </FormItem>
 
-                            <FormItem
-                                invalid={errors.end_date && touched.end_date}
-                                errorMessage={errors.end_date}
-                            >
-                                <h6 className="mb-4">End Date</h6>
-                                <Field name="end_date">
-                                    {({ field, form }: FieldProps) => (
-                                        <DatePicker
-                                            field={field}
-                                            form={form}
-                                            maxDate={MAX_DATE_CALENDER}
-                                            value={
-                                                field.value
-                                                    ? new Date(field.value)
-                                                    : new Date()
-                                            }
-                                            placeholder="End Date"
-                                            onChange={(date) => {
-                                                form.setFieldValue(
-                                                    field.name,
-                                                    date instanceof Date
-                                                        ? dayjs(date).format(
-                                                              'YYYY-MM-DD'
-                                                          )
-                                                        : null
-                                                )
-                                            }}
-                                        />
-                                    )}
-                                </Field>
-                            </FormItem>
-                        </FormContainer>
-                    </Form>
+                    <Form>
+                    <FormContainer>
+                        <FormItem
+                            invalid={
+                                errors.start_date && touched.start_date
+                            }
+                            errorMessage={errors.start_date}
+                        >
+                            <h6 className="mb-4">Start Date</h6>
+                            <Field name="start_date">
+                                {({ field, form }: FieldProps) => (
+                                    <DatePicker
+                                        field={field}
+                                        form={form}
+                                        maxDate={MAX_DATE_CALENDER}
+                                        value={
+                                            field.value
+                                                ? new Date(field.value)
+                                                : new Date()
+                                        }
+                                        placeholder="Start Date"
+                                        onChange={(date) => {
+                                            form.setFieldValue(
+                                                field.name,
+                                                date instanceof Date
+                                                    ? dayjs(date).format(
+                                                          'YYYY-MM-DD'
+                                                      )
+                                                    : null
+                                            )
+                                        }}
+                                    />
+                                )}
+                            </Field>
+                        </FormItem>
+
+                        <FormItem
+                            invalid={errors.end_date && touched.end_date}
+                            errorMessage={errors.end_date}>
+                            <h6 className="mb-4">End Date</h6>
+                            <Field name="end_date">
+                                {({ field, form }: FieldProps) => (
+                                    <DatePicker
+                                        field={field}
+                                        form={form}
+                                        maxDate={MAX_DATE_CALENDER}
+                                        value={
+                                            field.value
+                                                ? new Date(field.value)
+                                                : new Date()
+                                        }
+                                        placeholder="End Date"
+                                        onChange={(date) => {
+                                            form.setFieldValue(
+                                                field.name,
+                                                date instanceof Date
+                                                    ? dayjs(date).format(
+                                                          'YYYY-MM-DD'
+                                                      )
+                                                    : null
+                                            )
+                                        }}
+                                    />
+                                )}
+                            </Field>
+                        </FormItem>
+                    </FormContainer>
+
+                </Form>
                 )}
             </Formik>
         )

@@ -8,10 +8,10 @@ import useThemeClass from '@/utils/hooks/useThemeClass'
 import { useAppSelector } from '@/store'
 import dayjs from 'dayjs'
 import { apiGetAuditReportById } from '@/services/ReportService'
- import JsonView from 'react18-json-view'
+import JsonView from 'react18-json-view'
 // @ts-ignore
-import ReactJsonViewCompare from 'react-json-view-compare';
-import 'react18-json-view/src/style.css';
+import ReactJsonViewCompare from 'react-json-view-compare'
+import 'react18-json-view/src/style.css'
 import { capitalize } from 'lodash'
 type DataType = {
     id: string
@@ -24,9 +24,7 @@ type DataType = {
     event: string
     created_at: number
     properties: []
-
 }
-
 
 const ReportContent = () => {
     const { textTheme } = useThemeClass()
@@ -35,7 +33,6 @@ const ReportContent = () => {
 
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState<Partial<DataType>>({})
-
 
     useEffect(() => {
         fetchData()
@@ -54,13 +51,9 @@ const ReportContent = () => {
                 setLoading(false)
                 // @ts-ignore
                 setData(response.data?.data)
-
-
-
             }
         }
     }
-
 
     return (
         <Loading loading={loading}>
@@ -72,7 +65,8 @@ const ReportContent = () => {
                                 <address className="not-italic">
                                     <div>
                                         <h5 className="text-xl font-semibold">
-                                            {capitalize(data.subject_type)} #{data.subject_id}
+                                            {capitalize(data.subject_type)} #
+                                            {data.subject_id}
                                         </h5>
                                         <p>Title: {data.log_name}</p>
                                         <p>Description: {data.description}</p>
@@ -82,15 +76,21 @@ const ReportContent = () => {
                             </div>
                             <div>
                                 <address className="not-italic">
-                                    <h4 className="text-lg font-semibold">Log #{data?.id}</h4>
+                                    <h4 className="text-lg font-semibold">
+                                        Log #{data?.id}
+                                    </h4>
                                     <p>
-                                        Date: {dayjs(data.created_at).format('dddd, DD MMMM, YYYY hh:mm A')}
+                                        Date:{' '}
+                                        {dayjs(data.created_at).format(
+                                            'dddd, DD MMMM, YYYY hh:mm A'
+                                        )}
                                     </p>
-                                    <h6 className="text-lg font-semibold">{data.user_name} #{data.causer_id}</h6>
+                                    <h6 className="text-lg font-semibold">
+                                        {data.user_name} #{data.causer_id}
+                                    </h6>
                                     {/*@ts-ignore*/}
                                     <p>IP Address: {data.ip_address}</p>
                                 </address>
-
                             </div>
                         </div>
 
@@ -100,20 +100,29 @@ const ReportContent = () => {
                         {/*@ts-ignore*/}
                         {data.event === 'update' || data.event === 'create' ? (
                             <div className="border rounded-lg p-4">
-                                <h3 className="text-lg font-semibold mb-2">Changes</h3>
+                                <h3 className="text-lg font-semibold mb-2">
+                                    Changes
+                                </h3>
                                 <hr className="mb-4" />
                                 {/*@ts-ignore*/}
-                                <ReactJsonViewCompare oldData={data.old_data??[]} newData={data.new_data??[]} />
+                                <ReactJsonViewCompare
+                                    oldData={data.old_data ?? []}
+                                    newData={data.new_data ?? []}
+                                />
                             </div>
                         ) : (
                             <div className="border rounded-lg p-4 bg-red-200">
-                                <h6 className="text-lg font-semibold">Changes show only for update & create event.</h6>
+                                <h6 className="text-lg font-semibold">
+                                    Changes show only for update & create event.
+                                </h6>
                             </div>
                         )}
 
                         <div className="print:hidden mt-6 flex items-center justify-between">
-
-                            <Button variant="solid" onClick={() => window.print()}>
+                            <Button
+                                variant="solid"
+                                onClick={() => window.print()}
+                            >
                                 Print
                             </Button>
                         </div>

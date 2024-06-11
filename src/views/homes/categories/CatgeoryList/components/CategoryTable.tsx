@@ -33,6 +33,8 @@ type Data = {
     category_name: string
     created_at: string
     updated_at: string
+    is_active: boolean
+    sort_order: number
     category_logo: string
     id: string
 }
@@ -48,7 +50,7 @@ const NameColumn = ({ row }: { row: Data }) => {
     return (
         <span
             className={`cursor-pointer select-none font-semibold hover:${textTheme}`}
-            onClick={onView}
+            //   onClick={onView}
         >
             {row.category_name}
         </span>
@@ -110,7 +112,25 @@ const ImageColumn = ({ row }: { row: Data }) => {
 
     return <div className="flex items-center">{avatar}</div>
 }
-
+const statusColor: Record<
+    number,
+    {
+        label: string
+        dotClass: string
+        textClass: string
+    }
+> = {
+    1: {
+        label: 'Active',
+        dotClass: 'bg-emerald-500',
+        textClass: 'text-emerald-500',
+    },
+    0: {
+        label: 'Inactive',
+        dotClass: 'bg-amber-500',
+        textClass: 'text-amber-500',
+    },
+}
 const CategoryTable = () => {
     const tableRef = useRef<DataTableResetHandle>(null)
 
@@ -149,22 +169,17 @@ const CategoryTable = () => {
 
     const columns: ColumnDef<Data>[] = useMemo(
         () => [
-            {
-                header: 'ID',
-                accessorKey: 'id',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        // <span>{dayjs.unix(row.created_at).format('DD/MM/YYYY')}</span>
-                        <span>{row.id}</span>
-                    )
-                },
-            },
-            {
-                header: 'Name',
-                accessorKey: 'category_name',
-                cell: (props) => <NameColumn row={props.row.original} />,
-            },
+            // {
+            //     header: 'ID',
+            //     accessorKey: 'id',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             // <span>{dayjs.unix(row.created_at).format('DD/MM/YYYY')}</span>
+            //             <span>{row.id}</span>
+            //         )
+            //     },
+            // },
             {
                 header: 'Thumbnail',
                 accessorKey: 'category_logo',
@@ -174,16 +189,45 @@ const CategoryTable = () => {
                 },
             },
             {
+                header: 'Name',
+                accessorKey: 'category_name',
+                cell: (props) => <NameColumn row={props.row.original} />,
+            },
+            {
+                header: 'Sort Order',
+                accessorKey: 'sort_order',
+            },
+            {
+                header: 'Status',
+                accessorKey: 'is_active',
+                cell: (props) => {
+                    const row = props.row.original
+                    const status=Number(row.is_active)
+
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[status].dotClass} />
+                            <span
+                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${statusColor[status].textClass}`}
+                            >
+                                {statusColor[status].label}
+                            </span>
+                        </div>
+                    )
+                },
+            },
+
+            {
                 header: 'Created Date',
                 accessorKey: 'created_at',
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <span>
+                        <>
                             {dayjs(row.created_at).format(
                                 'DD-MMM-YYYY hh:mm A'
                             )}
-                        </span>
+                        </>
                     )
                 },
             },

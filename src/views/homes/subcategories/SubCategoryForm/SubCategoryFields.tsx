@@ -8,6 +8,7 @@ import { apiGetContentsHomeData } from '@/services/ContentService'
 import { apiGetCategoryDataAll } from '@/services/CategoryService'
 import Select from '@/components/ui/Select'
 import { OptionsOrGroups, GroupBase } from 'react-select'
+import { Loading } from '@/components/shared'
 
 type FormFieldsName = {
     sub_category_name: string
@@ -35,12 +36,14 @@ const SubCategoryFields = (props: FieldsProps) => {
     const { values, type, touched, errors } = props
     const [categories, setCategoryData] = useState<any>()
 
+    const [loading, setLoading] = useState(true)
 
     const getcategoryData = async () => {
         try {
             const response = await apiGetCategoryDataAll({})
             // @ts-ignore
             setCategoryData(response.data?.data)
+
         } catch (error) {
             console.error('Error fetching home data:', error)
         }
@@ -51,15 +54,18 @@ const SubCategoryFields = (props: FieldsProps) => {
         if (type === 'edit') {
             //@ts-ignore
             setCategoryData(values?.categories)
+            setLoading(false)
         } else {
             getcategoryData()
+            setLoading(false)
             // categories =
             //    categoriesData?.data || {}
         }
     }, [])
 
     return (
-        <AdaptableCard divider isLastChild className="mb-4">
+        <Loading loading={loading}>
+        <AdaptableCard divider isLastChild className="mb-4" >
             <p className="mb-6">Section to config the sub categories</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
@@ -156,6 +162,7 @@ const SubCategoryFields = (props: FieldsProps) => {
                 </div>
             </div>
         </AdaptableCard>
+        </Loading>
     )
 }
 

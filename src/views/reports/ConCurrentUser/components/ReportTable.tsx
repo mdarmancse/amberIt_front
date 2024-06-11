@@ -7,7 +7,7 @@ import {
     updateLoading,
     useAppDispatch,
     useAppSelector,
-} from '../../store'
+} from '../store'
 
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -25,6 +25,8 @@ type Data = {
     USAGE_DATE: string
     USAGE_HOUR: string
     TOTAL_USER: string
+    Highest_Concurrency: string
+    Average_Concurrency: string
 }
 
 const ReportTable = () => {
@@ -33,16 +35,18 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.conCurReportList.data.tableData
     )
 
     const { start_date, end_date, type } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+        (state) => state.conCurReportList.data.filterData
     )
 
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
+    const loading = useAppSelector(
+        (state) => state.conCurReportList.data.loading
+    )
 
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector((state) => state.conCurReportList.data.dataList)
 
     const fetchData = useCallback(async () => {
         dispatch(updateLoading({ loading: true }))
@@ -72,11 +76,11 @@ const ReportTable = () => {
         type,
     ])
 
-    // useEffect(() => {
-    //     if (tableRef) {
-    //         tableRef.current?.resetSorting()
-    //     }
-    // }, [data])
+    useEffect(() => {
+        if (tableRef) {
+            tableRef.current?.resetSorting()
+        }
+    }, [data])
 
     const tableData = useMemo(
         () => ({
@@ -91,8 +95,79 @@ const ReportTable = () => {
         [pageIndex, pageSize, sort, start_date, end_date, type, total]
     )
 
-    // const columns: ColumnDef<Data>[] = useMemo(() => {
-    //     const dynamicColumns: ColumnDef<Data>[] = [
+    const columns: ColumnDef<Data>[] = useMemo(() => {
+        const dynamicColumns: ColumnDef<Data>[] = [
+            {
+                header: '#',
+                accessorKey: 'sl',
+                cell: (props) => <span>{props.row.original.sl}</span>,
+            },
+            {
+                header: 'Date',
+                accessorKey: 'USAGE_DATE',
+                cell: (props) => (
+                    <span>
+                        {dayjs(props.row.original.USAGE_DATE).format(
+                            'DD-MMM-YYYY'
+                        )}
+                    </span>
+                ),
+            },
+        ]
+
+        // Conditionally add the 'Hour' column based on the value of type
+        if (type === 2) {
+            dynamicColumns.splice(
+                2,
+                0,
+                {
+                    header: 'Hour',
+                    accessorKey: 'USAGE_HOUR',
+                    cell: (props) => (
+                        <span>{props.row.original.USAGE_HOUR}</span>
+                    ),
+                },
+                {
+                    header: 'Total User',
+                    accessorKey: 'TOTAL_USER',
+                    cell: (props) => (
+                        <span>{props.row.original.TOTAL_USER}</span>
+                    ),
+                }
+            )
+        } else {
+            dynamicColumns.splice(
+                2,
+                0,
+                {
+                    header: 'Usage Hour',
+                    accessorKey: 'USAGE_HOUR',
+                    cell: (props) => (
+                        <span>{props.row.original.USAGE_HOUR}</span>
+                    ),
+                },
+                {
+                    header: 'Highest Concurrency',
+                    accessorKey: 'Highest_Concurrency',
+                    cell: (props) => (
+                        <span>{props.row.original.Highest_Concurrency}</span>
+                    ),
+                },
+                {
+                    header: 'Average Concurrency',
+                    accessorKey: 'Average_Concurrency',
+                    cell: (props) => (
+                        <span>{props.row.original.Average_Concurrency}</span>
+                    ),
+                }
+            )
+        }
+
+        return dynamicColumns
+    }, [type])
+
+    // const columns: ColumnDef<Data>[] = useMemo(
+    //     () => [
     //         {
     //             header: '#',
     //             accessorKey: 'sl',
@@ -120,59 +195,15 @@ const ReportTable = () => {
     //             accessorKey: 'TOTAL_USER',
     //             cell: (props) => <span>{props.row.original.TOTAL_USER}</span>,
     //         },
-    //     ]
-    //
-    //     // Conditionally add the 'Hour' column based on the value of type
-    //     // if (type === 2) {
-    //     //     dynamicColumns.splice(2, 0, {
-    //     //         header: 'Hour',
-    //     //         accessorKey: 'USAGE_HOUR',
-    //     //         cell: (props) => <span>{props.row.original.USAGE_HOUR}</span>,
-    //     //     })
-    //     // }
-    //
-    //     return dynamicColumns
-    // }, [type])
-
-    const columns: ColumnDef<Data>[] = useMemo(
-        () => [
-            {
-                header: '#',
-                accessorKey: 'sl',
-                cell: (props) => <span>{props.row.original.sl}</span>,
-            },
-            {
-                header: 'Date',
-                accessorKey: 'USAGE_DATE',
-                cell: (props) => (
-                    <span>
-                        {dayjs(props.row.original.USAGE_DATE).format(
-                            'DD-MMM-YYYY'
-                        )}
-                    </span>
-                ),
-            },
-            {
-                header: 'Hour',
-                accessorKey: 'USAGE_HOUR',
-                cell: (props) => <span>{props.row.original.USAGE_HOUR}</span>,
-            },
-
-            {
-                header: 'Total User',
-                accessorKey: 'TOTAL_USER',
-                cell: (props) => <span>{props.row.original.TOTAL_USER}</span>,
-            },
-        ],
-        []
-    )
+    //     ],
+    //     []
+    // )
 
     const onPaginationChange = (page: number) => {
         const newTableData = cloneDeep(tableData)
         newTableData.pageIndex = page
         dispatch(setTableData(newTableData))
-        dispatch(setFilterData({ start_date,end_date,type }))
-
+        dispatch(setFilterData({ start_date, end_date, type }))
     }
 
     const onSelectChange = (value: number) => {

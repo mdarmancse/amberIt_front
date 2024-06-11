@@ -6,8 +6,8 @@ import {
     setTableData,
     updateLoading,
     useAppDispatch,
-    useAppSelector
-} from '../../store'
+    useAppSelector,
+} from '../store'
 
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -20,7 +20,7 @@ import type {
 import dayjs from 'dayjs'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import { useNavigate } from 'react-router-dom'
-import { setDeleteMode, setSelectedRow } from '@/views/homes/contents/ContentList/LiveChannel/store'
+
 import Tooltip from '@/components/ui/Tooltip'
 import { HiOutlineEye, HiOutlinePencil } from 'react-icons/hi'
 
@@ -39,7 +39,6 @@ const ActionColumn = ({ row }: { row: Data }) => {
     const { textTheme } = useThemeClass()
     const navigate = useNavigate()
 
-
     const onView = useCallback(() => {
         navigate(`/reports/audit-report/${row.id}`)
     }, [navigate, row])
@@ -54,8 +53,6 @@ const ActionColumn = ({ row }: { row: Data }) => {
                     <HiOutlineEye />
                 </span>
             </Tooltip>
-
-
         </div>
     )
 }
@@ -66,19 +63,17 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.auditReportList.data.tableData
     )
 
-    const { start_date, end_date,    event,
-        subject_type,
-        log_name,
-        causer_id } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+    const { start_date, end_date, event, subject_type, log_name, causer_id } =
+        useAppSelector((state) => state.auditReportList.data.filterData)
+
+    const loading = useAppSelector(
+        (state) => state.auditReportList.data.loading
     )
 
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
-
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector((state) => state.auditReportList.data.dataList)
 
     const fetchData = useCallback(async () => {
         dispatch(updateLoading({ loading: true }))
@@ -87,20 +82,28 @@ const ReportTable = () => {
             getAuditReport({
                 start_date,
                 end_date,
-                    event,
-                    subject_type,
-                    log_name,
-                    causer_id,
+                event,
+                subject_type,
+                log_name,
+                causer_id,
                 pageIndex,
                 pageSize,
                 sort,
                 query,
             })
         )
-    }, [dispatch, pageIndex, pageSize, sort, start_date, end_date,event,
+    }, [
+        dispatch,
+        pageIndex,
+        pageSize,
+        sort,
+        start_date,
+        end_date,
+        event,
         subject_type,
         log_name,
-        causer_id])
+        causer_id,
+    ])
     useEffect(() => {
         fetchData()
     }, [
@@ -121,7 +124,7 @@ const ReportTable = () => {
         if (tableRef) {
             tableRef.current?.resetSorting()
         }
-    }, [data])
+    }, [data,tableRef])
 
     const tableData = useMemo(
         () => ({
@@ -136,10 +139,18 @@ const ReportTable = () => {
             causer_id,
             total,
         }),
-        [pageIndex, pageSize, sort, start_date, end_date,  event,
+        [
+            pageIndex,
+            pageSize,
+            sort,
+            start_date,
+            end_date,
+            event,
             subject_type,
             log_name,
-            causer_id, total]
+            causer_id,
+            total,
+        ]
     )
 
     const columns: ColumnDef<Data>[] = useMemo(() => {
@@ -174,16 +185,12 @@ const ReportTable = () => {
             {
                 header: 'Description',
                 accessorKey: 'description',
-                cell: (props) => (
-                    <span>{props.row.original.description}</span>
-                ),
+                cell: (props) => <span>{props.row.original.description}</span>,
             },
             {
                 header: 'Table Name',
                 accessorKey: 'subject_type',
-                cell: (props) => (
-                    <span>{props.row.original.subject_type}</span>
-                ),
+                cell: (props) => <span>{props.row.original.subject_type}</span>,
             },
             {
                 header: 'Event',
@@ -213,12 +220,11 @@ const ReportTable = () => {
         dispatch(setTableData(newTableData))
     }
 
-    const onSort = (sort: OnSortParam) => {
+    const onSort = (sort:OnSortParam ) => {
         const newTableData = cloneDeep(tableData)
         newTableData.sort = sort
         dispatch(setTableData(newTableData))
     }
-
 
     return (
         <DataTable

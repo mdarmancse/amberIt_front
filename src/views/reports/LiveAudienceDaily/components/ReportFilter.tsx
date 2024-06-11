@@ -1,11 +1,15 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiClock, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
 import {
-    getLiveAudienceDailyReport, initialTableData,
-    setFilterData, setTableData, updateLoading,
+    // eslint-disable-next-line import/named
+    getLiveAudienceDailyReport,
+    initialTableData,
+    setFilterData,
+    setTableData,
+    updateLoading,
     useAppDispatch,
-    useAppSelector
-} from '../../store'
+    useAppSelector,
+} from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -36,16 +40,16 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.liveAudReportList.data.filterData
         )
 
         const handleSubmit = async (values: FormModel) => {
             onSubmitComplete?.()
+
             dispatch(setFilterData(values))
             dispatch(updateLoading(true))
-             dispatch(getLiveAudienceDailyReport(filterData))
-             dispatch(updateLoading(false))
-
+            dispatch(getLiveAudienceDailyReport(filterData))
+            dispatch(updateLoading(false))
         }
 
         return (
@@ -60,8 +64,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <FormItem
-                            >
+                            <FormItem>
                                 <h6 className="mb-4">Start Time</h6>
                                 <Field name="start_date">
                                     {({ field, form }: FieldProps) => (
@@ -70,44 +73,46 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             form={form}
                                             format="12"
                                             //defaultValue={new Date(Date.now() - 10 * 60 * 1000)}
-                                            suffix={<HiClock className="text-lg" />}
+                                            suffix={
+                                                <HiClock className="text-lg" />
+                                            }
                                             onChange={(date) => {
                                                 form.setFieldValue(
                                                     field.name,
                                                     date instanceof Date
-                                                        ? dayjs(date).format('HH:mm:ss')
+                                                        ? dayjs(date).format(
+                                                              'HH:mm:ss'
+                                                          )
                                                         : null
-                                                );
+                                                )
                                             }}
                                         />
                                     )}
                                 </Field>
-
                             </FormItem>
 
-                            <FormItem
-
-                            >
+                            <FormItem>
                                 <h6 className="mb-4">End Time</h6>
                                 <Field name="end_date">
                                     {({ field, form }: FieldProps) => (
-
-                                        <TimeInput format="12"
-                                                //   defaultValue={new Date()}
-                                                   field={field}
-                                                   form={form}
-                                                   suffix={<HiClock className="text-lg" />}
-                                                   onChange={(date) => {
-                                                       form.setFieldValue(
-                                                           field.name,
-                                                           date instanceof Date
-                                                               ? dayjs(date).format(
-                                                                   'HH:mm:ss'
-                                                               ):null
-
-                                                       )
-                                                   }}
-
+                                        <TimeInput
+                                            format="12"
+                                            //   defaultValue={new Date()}
+                                            field={field}
+                                            form={form}
+                                            suffix={
+                                                <HiClock className="text-lg" />
+                                            }
+                                            onChange={(date) => {
+                                                form.setFieldValue(
+                                                    field.name,
+                                                    date instanceof Date
+                                                        ? dayjs(date).format(
+                                                              'HH:mm:ss'
+                                                          )
+                                                        : null
+                                                )
+                                            }}
                                         />
                                     )}
                                 </Field>

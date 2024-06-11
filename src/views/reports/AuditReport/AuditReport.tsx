@@ -1,11 +1,11 @@
-import reducer from '../store'
+import reducer from './store'
 import { injectReducer } from '@/store'
 import AdaptableCard from '@/components/shared/AdaptableCard'
 
 import ReportTable from './components/ReportTable'
 import ReportTableTools from '@/views/reports/AuditReport/components/ReportTableTools'
 
-injectReducer('homeReportList', reducer)
+injectReducer('auditReportList', reducer)
 
 const AuditReport = () => {
     return (

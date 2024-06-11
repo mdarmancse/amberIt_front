@@ -1,6 +1,13 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiCheck, HiOutlineFilter } from 'react-icons/hi'
-import { getConCurrentUserReport, setFilterData, updateLoading, useAppDispatch, useAppSelector } from './../../store'
+import {
+    getConCurrentUserReport,
+    setFilterData,
+    setTableData,
+    updateLoading,
+    useAppDispatch,
+    useAppSelector,
+} from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -86,17 +93,22 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.conCurReportList.data.filterData
         )
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
+            dispatch(
+                setTableData({
+                    pageIndex: 1,
+                    pageSize: 10,
+                })
+            )
             dispatch(setFilterData(values))
             // dispatch(updateLoading(true))
             // dispatch(getConCurrentUserReport(filterData))
             // dispatch(updateLoading(false))
         }
-
 
         return (
             <Formik
@@ -108,8 +120,6 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                 }}
             >
                 {({ values, touched, errors }) => (
-
-
                     <Form>
                         <FormContainer>
                             <FormItem
@@ -123,8 +133,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                     {({ field, form }: FieldProps) => (
                                         <DatePicker
                                             field={field}
-                                            maxDate={MAX_DATE_CALENDER}
                                             form={form}
+                                            maxDate={MAX_DATE_CALENDER}
                                             value={
                                                 field.value
                                                     ? new Date(field.value)
@@ -179,10 +189,10 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                             </FormItem>
 
                             <FormItem
-                                invalid={errors.end_date && touched.end_date}
-                                errorMessage={errors.end_date}
+                                invalid={errors.type && touched.type}
+                                errorMessage={errors.type}
                             >
-                                <h6 className="mb-4">Type</h6>
+                                <h6 className="mb-4">Content Type</h6>
                                 <Field name="type">
                                     {({ field, form }: FieldProps) => (
                                         <Select
@@ -196,13 +206,11 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     value: string | number
                                                 }) => a.value === values.type
                                             )}
-
                                             components={{
                                                 Option: CustomSelectOption,
                                                 Control: CustomControl,
                                             }}
                                             onChange={(option) => {
-                                               // console.log('Values',values)
                                                 // @ts-ignore
                                                 form.setFieldValue(
                                                     field.name,

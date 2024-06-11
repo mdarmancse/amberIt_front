@@ -190,6 +190,55 @@ const homesRoute: Routes = [
             header: 'Create Notification',
         },
     },
+
+    {
+        key: 'interest.interest',
+        menu_id: ["32"],
+        purpose: ["read"],
+        path: `${APP_PREFIX_PATH}/interests/interest-list`,
+        component: lazy(() => import('@/views/homes/interests/InterestList')),
+        authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+    },
+    {
+        key: 'interest.interestNew',
+        menu_id: ["32"],
+        purpose: ["create"],
+        path: `${APP_PREFIX_PATH}/interests/interest-new`,
+        component: lazy(() => import('@/views/homes/interests/InterestNew/InterestNew')),
+        authority: [SUPER_ADMIN,ADMIN],
+        meta: {
+            header: 'Create Interest ',
+        },
+    },
+    {
+        key: 'interest.interestEdit',
+        menu_id: ["32"],
+        purpose: ["edit"],
+        path: `${APP_PREFIX_PATH}/interests/interest-edit/:interestId`,
+        component: lazy(() => import('@/views/homes/interests/InterestEdit')),
+        authority: [SUPER_ADMIN,ADMIN],
+        meta: {
+            header: 'Update Interest',
+        },
+    },
+
+
+    {
+        key: 'movie-request.movie-request',
+        menu_id: ["56"],
+        purpose: ["read"],
+        path: `${APP_PREFIX_PATH}/movie-request/movie-request-list`,
+        component: lazy(() => import('@/views/homes/movieRequests/movieRequestList')),
+        authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+    },
+    {
+        key: 'contact.contact',
+        menu_id: ["57"],
+        purpose: ["read"],
+        path: `${APP_PREFIX_PATH}/contacts/contact-list`,
+        component: lazy(() => import('@/views/homes/contacts/ContactList')),
+        authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+    },
 ]
 
 export default homesRoute

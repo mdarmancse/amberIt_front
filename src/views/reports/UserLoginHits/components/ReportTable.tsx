@@ -1,13 +1,13 @@
 import { useEffect, useCallback, useMemo, useRef } from 'react'
 import DataTable from '@/components/shared/DataTable'
 import {
+    // eslint-disable-next-line import/named
     getLoginLogReport,
-    setFilterData,
     setTableData,
     updateLoading,
     useAppDispatch,
     useAppSelector,
-} from '../../store'
+} from '../store'
 
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -35,16 +35,20 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.userLoginReportList.data.tableData
     )
 
     const { start_date, end_date, type } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+        (state) => state.userLoginReportList.data.filterData
     )
 
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
+    const loading = useAppSelector(
+        (state) => state.userLoginReportList.data.loading
+    )
 
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector(
+        (state) => state.userLoginReportList.data.dataList
+    )
 
     const fetchData = useCallback(async () => {
         dispatch(updateLoading({ loading: true }))

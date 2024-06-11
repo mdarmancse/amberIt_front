@@ -25,6 +25,16 @@
             "category-list": "Categories",
             "sub-category-list": "Sub Categories"
         },
+        "interest": {
+            "interest-create": "Create Interest",
+            "interest-list": "Interests"
+        },
+        "movie-request": {
+            "movie-request-list": "Request List"
+        },
+        "contacts": {
+            "contact-list": "Contacts"
+        },
         "fcm": {
             "notification-create": "Create Notification",
             "notification-list": "Notification List",

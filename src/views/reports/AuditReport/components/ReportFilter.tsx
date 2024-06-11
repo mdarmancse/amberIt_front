@@ -2,14 +2,21 @@ import { useState, useRef, forwardRef, useEffect } from 'react'
 import { HiCheck, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
 import {
     setFilterData,
-    initialTableData,
     useAppDispatch,
-    useAppSelector, updateLoading, getAuditReport
-} from '../../store'
+    useAppSelector,
+
+} from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
-import { Field, Form, Formik, FormikProps, FieldProps, FormikValues } from 'formik'
+import {
+    Field,
+    Form,
+    Formik,
+    FormikProps,
+    FieldProps,
+    FormikValues,
+} from 'formik'
 import type { MouseEvent } from 'react'
 import dayjs from 'dayjs'
 import { Badge, DatePicker } from '@/components/ui'
@@ -26,13 +33,13 @@ import { apiGetUserDataAll } from '@/services/UserService'
 import Input from '@/components/ui/Input'
 
 type FormModel = {
-    start_date: string
-    end_date: string
-    type: number
+    start_date: string | number
+    end_date: string | number
+    type: number | string
     event: string
     log_name: string
-    subject_type:string
-    causer_id:string
+    subject_type: string
+    causer_id: string
 }
 const { Control } = components
 type FilterFormProps = {
@@ -44,7 +51,7 @@ type DrawerFooterProps = {
     onCancel: (event: MouseEvent<HTMLButtonElement>) => void
 }
 type Option = {
-    value: number |string
+    value:  string
     label: string
     color: string
 }
@@ -94,27 +101,25 @@ const CustomControl = ({ children, ...props }: ControlProps<Option>) => {
     )
 }
 
-
 const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
-
     ({ onSubmitComplete }, ref) => {
-
-
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.auditReportList.data.filterData
         )
 
-        const handleSubmit = (values: FormikValues) => {
-           // alert("hhelo")
+        const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
-          //  console.log({values})
+            // dispatch(
+            //     setTableData({
+            //         pageIndex: 1,
+            //         pageSize: 10,
+            //     })
+            // )
+           //   console.log({values})
             dispatch(setFilterData(values))
-            //  dispatch(updateLoading(true))
-            // dispatch(getAuditReport(filterData))
-            //  dispatch(updateLoading(false))
-            //dispatch(getContentViewsReport(initialTableData))
+
         }
 
         const [users, setUserData] = useState<any>()
@@ -137,14 +142,12 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
             <Formik
                 enableReinitialize
                 innerRef={ref}
-                // @ts-ignore
                 initialValues={filterData}
-                onSubmit={(values:FormModel) => {
+                onSubmit={(values) => {
                     handleSubmit(values)
                 }}
             >
                 {({ values, touched, errors }) => (
-
                     <Form>
                         <FormContainer>
                             <FormItem
@@ -163,7 +166,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             value={
                                                 field.value
                                                     ? new Date(field.value)
-                                                    : null
+                                                    : new Date()
                                             }
                                             placeholder="Start Date"
                                             onChange={(date) => {
@@ -171,8 +174,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     field.name,
                                                     date instanceof Date
                                                         ? dayjs(date).format(
-                                                            'YYYY-MM-DD'
-                                                        )
+                                                              'YYYY-MM-DD'
+                                                          )
                                                         : null
                                                 )
                                             }}
@@ -186,7 +189,6 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 invalid={errors.end_date && touched.end_date}
                                 errorMessage={errors.end_date}
                             >
-
                                 <Field name="end_date">
                                     {({ field, form }: FieldProps) => (
                                         <DatePicker
@@ -196,7 +198,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             value={
                                                 field.value
                                                     ? new Date(field.value)
-                                                    : null
+                                                    : new Date()
                                             }
                                             placeholder="End Date"
                                             onChange={(date) => {
@@ -204,8 +206,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     field.name,
                                                     date instanceof Date
                                                         ? dayjs(date).format(
-                                                            'YYYY-MM-DD'
-                                                        )
+                                                              'YYYY-MM-DD'
+                                                          )
                                                         : null
                                                 )
                                             }}
@@ -229,9 +231,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             value={options?.find(
                                                 (a: {
                                                     value: string | number
-                                                }) => a.value === values.type
+                                                }) => a.value === values.event
                                             )}
-
                                             components={{
                                                 Option: CustomSelectOption,
                                                 Control: CustomControl,
@@ -251,9 +252,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                             </FormItem>
                             <FormItem
                                 label="By Title"
-                                invalid={
-                                    errors.log_name && touched.log_name
-                                }
+                                invalid={errors.log_name && touched.log_name}
                                 errorMessage={errors.log_name}
                             >
                                 <Field
@@ -264,35 +263,37 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                     component={Input}
                                 />
                             </FormItem>
-                                <FormItem
-                                    label="By User"
-                                    invalid={
-                                        (errors.causer_id && touched.causer_id) as unknown as boolean
-                                    }
-                                    errorMessage={errors.causer_id as string}
-                                >
-                                    <Field name="causer_id">
-                                        {({ field, form }: FieldProps) => (
-                                            <Select
-                                                field={field}
-                                                form={form}
-                                                options={users}
-                                                value={users?.find(
-                                                    (a: { value: string | number }) =>
-                                                        a.value === values.causer_id
-                                                )}
-                                                onChange={(option) => {
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }}
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItem>
-
-
+                            <FormItem
+                                label="By User"
+                                invalid={
+                                    (errors.causer_id &&
+                                        touched.causer_id) as unknown as boolean
+                                }
+                                errorMessage={errors.causer_id as string}
+                            >
+                                <Field name="causer_id">
+                                    {({ field, form }: FieldProps) => (
+                                        <Select
+                                            isClearable
+                                            field={field}
+                                            form={form}
+                                            options={users}
+                                            value={users?.find(
+                                                (a: {
+                                                    value: string | number
+                                                }) =>
+                                                    a.value === values.causer_id
+                                            )}
+                                            onChange={(option) => {
+                                                form.setFieldValue(
+                                                    field.name,
+                                                    option?.value
+                                                )
+                                            }}
+                                        />
+                                    )}
+                                </Field>
+                            </FormItem>
 
                             <FormItem
                                 label="By Table"

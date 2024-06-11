@@ -1,11 +1,6 @@
 import { useState, useRef, forwardRef } from 'react'
 import { HiClock, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
-import {
-    getLiveAudienceDailyReport, getLPaymentReport, initialTableData,
-    setFilterData, setTableData, updateLoading,
-    useAppDispatch,
-    useAppSelector
-} from '../../store'
+import { setFilterData, useAppDispatch, useAppSelector } from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -36,16 +31,15 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.paymentReportList.data.filterData
         )
 
-        const handleSubmit =  async(values: FormModel) => {
+        const handleSubmit = async (values: FormModel) => {
             onSubmitComplete?.()
             await dispatch(setFilterData(values))
             // dispatch(updateLoading(true))
             //  dispatch(getLPaymentReport(filterData))
             //  dispatch(updateLoading(false))
-
         }
 
         return (
@@ -76,7 +70,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             value={
                                                 field.value
                                                     ? new Date(field.value)
-                                                    : null
+                                                    : new Date()
                                             }
                                             placeholder="Start Date"
                                             onChange={(date) => {
@@ -84,8 +78,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     field.name,
                                                     date instanceof Date
                                                         ? dayjs(date).format(
-                                                            'YYYY-MM-DD'
-                                                        )
+                                                              'YYYY-MM-DD'
+                                                          )
                                                         : null
                                                 )
                                             }}
@@ -108,7 +102,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                             value={
                                                 field.value
                                                     ? new Date(field.value)
-                                                    : null
+                                                    : new Date()
                                             }
                                             placeholder="End Date"
                                             onChange={(date) => {
@@ -116,8 +110,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                                     field.name,
                                                     date instanceof Date
                                                         ? dayjs(date).format(
-                                                            'YYYY-MM-DD'
-                                                        )
+                                                              'YYYY-MM-DD'
+                                                          )
                                                         : null
                                                 )
                                             }}

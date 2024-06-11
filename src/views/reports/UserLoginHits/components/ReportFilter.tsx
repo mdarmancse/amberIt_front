@@ -1,12 +1,6 @@
 import { useState, useRef, forwardRef } from 'react'
-import { HiCheck, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi'
-import {
-    getContentViewsReport,
-    setFilterData,
-    initialTableData,
-    useAppDispatch,
-    useAppSelector,
-} from './../../store'
+import { HiCheck, HiOutlineFilter } from 'react-icons/hi'
+import { setFilterData, useAppDispatch, useAppSelector } from '../store'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
@@ -25,8 +19,8 @@ import Select from '@/components/ui/Select'
 import { MAX_DATE_CALENDER } from '@/components/ui/utils/constants'
 
 type FormModel = {
-    start_date: string
-    end_date: string
+    start_date: string | number
+    end_date: string | number
     type: number
 }
 const { Control } = components
@@ -92,18 +86,15 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         const dispatch = useAppDispatch()
 
         const filterData = useAppSelector(
-            (state) => state.homeReportList.data.filterData
+            (state) => state.userLoginReportList.data.filterData
         )
-
-        console.log('filterdata', filterData)
-
-        const { type } = useAppSelector(
-            (state) => state.homeReportList.data.filterData
-        )
-        console.log('type', type)
 
         const handleSubmit = (values: FormModel) => {
             onSubmitComplete?.()
+            // dispatch(setTableData({
+            //     pageIndex:1,
+            //     pageSize:10,
+            // }))
             dispatch(setFilterData(values))
             //dispatch(getContentViewsReport(initialTableData))
         }
@@ -115,21 +106,18 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
         return (
             <Formik
                 enableReinitialize
+                //@ts-ignore
                 innerRef={ref}
                 initialValues={filterData}
                 onSubmit={(values) => {
+                    //@ts-ignore
                     handleSubmit(values)
                 }}
             >
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <FormItem
-                                invalid={
-                                    errors.start_date && touched.start_date
-                                }
-                                errorMessage={errors.start_date}
-                            >
+                            <FormItem>
                                 <h6 className="mb-4">Start Date</h6>
                                 <Field name="start_date">
                                     {({ field, form }: FieldProps) => (
@@ -158,10 +146,7 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 </Field>
                             </FormItem>
 
-                            <FormItem
-                                invalid={errors.end_date && touched.end_date}
-                                errorMessage={errors.end_date}
-                            >
+                            <FormItem>
                                 <h6 className="mb-4">End Date</h6>
                                 <Field name="end_date">
                                     {({ field, form }: FieldProps) => (
@@ -190,11 +175,8 @@ const FilterForm = forwardRef<FormikProps<FormModel>, FilterFormProps>(
                                 </Field>
                             </FormItem>
 
-                            <FormItem
-                                invalid={errors.end_date && touched.end_date}
-                                errorMessage={errors.end_date}
-                            >
-                                <h6 className="mb-4">Type</h6>
+                            <FormItem>
+                                <h6 className="mb-4">Content Type</h6>
                                 <Field name="type">
                                     {({ field, form }: FieldProps) => (
                                         <Select

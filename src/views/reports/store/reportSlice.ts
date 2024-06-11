@@ -12,13 +12,15 @@ import {
     apiGetConCurrentUserReport,
     apiGetUniqueUserMonthlyReport,
     apiGetUniqueUserDailyReport,
-    apiLiveAudienceDailyReport, apiGetPaymentReport, apiGetAuditReport
+    apiLiveAudienceDailyReport,
+    apiGetPaymentReport,
+    apiGetAuditReport,
 } from '@/services/ReportService'
 // eslint-disable-next-line import/named
 import { apiGetIosOtpList } from '@/services/CommonService'
 
 type Data = {
-    usage_hour:string
+    usage_hour: string
     note: string
     value: number
     title: string
@@ -40,8 +42,8 @@ export const initialTableData: TableQueries = {
     type: '',
     event: '',
     log_name: '',
-    subject_type:'',
-    causer_id:'',
+    subject_type: '',
+    causer_id: '',
     sort: {
         order: '',
         key: '',
@@ -53,10 +55,8 @@ type FilterQueries = {
     type: number | string
     event: string
     log_name: string
-    subject_type:string
-    causer_id:string
-    pageIndex: number,
-    pageSize: number,
+    subject_type: string
+    causer_id: string
 }
 type Datas = Data[]
 
@@ -149,20 +149,18 @@ export const getLiveAudienceDailyReport = createAsyncThunk(
 export const getLPaymentReport = createAsyncThunk(
     SLICE_NAME + '/getPaymentReport',
     async (data: TableQueries) => {
-        const response = await apiGetPaymentReport<
-            GetResponse,
-            TableQueries
-        >(data)
+        const response = await apiGetPaymentReport<GetResponse, TableQueries>(
+            data
+        )
         return response.data
     }
 )
 export const getAuditReport = createAsyncThunk(
     SLICE_NAME + '/getAuditReport',
     async (data: TableQueries) => {
-        const response = await apiGetAuditReport<
-            GetResponse,
-            TableQueries
-        >(data)
+        const response = await apiGetAuditReport<GetResponse, TableQueries>(
+            data
+        )
         return response.data
     }
 )
@@ -178,8 +176,8 @@ const initialState: ListState = {
         type: '',
         event: '',
         log_name: '',
-        subject_type:'',
-        causer_id:'',
+        subject_type: '',
+        causer_id: '',
         sort: {
             order: '',
             key: '',
@@ -191,11 +189,8 @@ const initialState: ListState = {
         type: 1,
         event: '',
         log_name: '',
-        subject_type:'',
-        causer_id:'',
-        pageIndex: 1,
-        pageSize: 10,
-
+        subject_type: '',
+        causer_id: '',
     },
     selectedRows: [],
     selectedRow: '',

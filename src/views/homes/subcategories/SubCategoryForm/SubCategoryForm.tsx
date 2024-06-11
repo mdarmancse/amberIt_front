@@ -11,6 +11,8 @@ import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
 
 import SubCategoryFields from '@/views/homes/subcategories/SubCategoryForm/SubCategoryFields'
+import CategoryImage from '@/views/homes/categories/CategoryForm/CategoryImage'
+import SubCategoryImage from '@/views/homes/subcategories/SubCategoryForm/SubCategoryImage'
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
@@ -19,6 +21,7 @@ type InitialData = {
     id?: string
     category_id?: string
     sub_category_name?: string
+    stb_thumbnail?: string
     is_active?: string
     sort_order?: string
 }
@@ -98,15 +101,18 @@ const SubCategoryForm = forwardRef<FormikRef, SubCategoryForm>((props, ref) => {
         type,
         initialData = {
             id: '',
-            category_name: '',
-            category_logo: '',
+            category_id: '',
+            sub_category_name: '',
+            stb_thumbnail: '',
             is_active: '',
             sort_order: '',
         },
         onFormSubmit,
         onDiscard,
         onDelete,
-    } = props
+    } = props;
+
+    const [isSubmitDisabled, setSubmitDisabled] = useState(false)
 
     return (
         <>
@@ -131,6 +137,13 @@ const SubCategoryForm = forwardRef<FormikRef, SubCategoryForm>((props, ref) => {
                                         errors={errors}
                                         values={values}
                                         type={type}
+                                    />
+                                </div>
+
+                                <div className="lg:col-span-1 grid row-span-3">
+                                    <SubCategoryImage
+                                        values={values}
+                                        setSubmitDisabled={setSubmitDisabled}
                                     />
                                 </div>
                             </div>

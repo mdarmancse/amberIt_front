@@ -1,11 +1,12 @@
 import { useEffect, useCallback } from 'react'
 
 import {
+    // eslint-disable-next-line import/named
     getLiveAudienceDailyReport,
     updateLoading,
     useAppDispatch,
     useAppSelector,
-} from '../../store'
+} from '../store'
 
 import { Loading } from '@/components/shared'
 import { Card } from '@/components/ui'
@@ -14,18 +15,20 @@ const ReportTable = () => {
     const dispatch = useAppDispatch()
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.homeReportList.data.tableData
+        (state) => state.liveAudReportList.data.tableData
     )
 
     const { start_date, end_date } = useAppSelector(
-        (state) => state.homeReportList.data.filterData
+        (state) => state.liveAudReportList.data.filterData
     )
 
+    const loading = useAppSelector(
+        (state) => state.liveAudReportList.data.loading
+    )
 
-
-    const loading = useAppSelector((state) => state.homeReportList.data.loading)
-
-    const data = useAppSelector((state) => state.homeReportList.data.dataList)
+    const data = useAppSelector(
+        (state) => state.liveAudReportList.data.dataList
+    )
 
     const fetchData = useCallback(async () => {
         dispatch(updateLoading({ loading: true }))
