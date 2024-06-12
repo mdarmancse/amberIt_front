@@ -14,13 +14,9 @@ import appConfig from '@/configs/app.config'
 const url = appConfig.apiPrefix + '/upload-image-gcp'
 
 type Image = {
-    feature_banner: string
-    mobile_logo: string
-    mobile_thumbnail: string
-    web_logo: string
-    web_thumbnail: string
-    stb_logo: string
-    stb_thumbnail: string
+    poster: string
+    backdrops_Poster: string
+
 }
 
 type FormModel = {
@@ -104,17 +100,9 @@ const ContentImages = (props: ImagesProps) => {
     }
 
     const fieldObjects = [
-        { label: 'Feature Banner', field: 'feature_banner', res: '800x800px' },
-        {
-            label: 'Mobile Thumbnail',
-            field: 'mobile_thumbnail',
-            res: '1280x720px',
-        },
-        { label: 'Mobile Logo', field: 'mobile_logo', res: '1280x720px' },
-        { label: 'Web Logo', field: 'web_logo', res: '1280x720px' },
-        { label: 'Web Thumbnail', field: 'web_thumbnail', res: '1280x720px' },
-        { label: 'STB Logo', field: 'stb_logo', res: '1280x720px' },
-        { label: 'STB Thumbnail', field: 'stb_thumbnail', res: '1280x720px' },
+
+        { label: 'Poster', field: 'poster', res: '1280x720px' },
+        { label: 'Backdrop Poster', field: 'backdrops_Poster', res: '1280x720px' },
     ]
 
     return (

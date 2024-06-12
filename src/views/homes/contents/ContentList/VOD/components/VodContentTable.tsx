@@ -26,18 +26,16 @@ import type {
 } from '@/components/shared/DataTable'
 
 type Data = {
-    content_file_name: string
     id: number
-    is_approved: boolean
     is_active: boolean
-    is_transcoded: boolean
+    is_tv_series: boolean
     is_premium: boolean
     content_name: string
     created_at: number
     updated_at: number
     category_name: string
-    transcoding_start_time: number
-    transcoding_end_time: number
+    content_identity: string
+
     status: number
 }
 const transcodedColor: Record<
@@ -94,6 +92,25 @@ const premiumColor: Record<
     },
     0: {
         label: 'Not Premium',
+        dotClass: 'bg-amber-500',
+        textClass: 'text-amber-500',
+    },
+}
+const webSeriesColor: Record<
+    number,
+    {
+        label: string
+        dotClass: string
+        textClass: string
+    }
+> = {
+    1: {
+        label: 'Yes',
+        dotClass: 'bg-emerald-500',
+        textClass: 'text-emerald-500',
+    },
+    0: {
+        label: 'No',
         dotClass: 'bg-amber-500',
         textClass: 'text-amber-500',
     },
@@ -244,6 +261,17 @@ const VodContentTable = () => {
             },
 
             {
+                header: 'Content Identity',
+                accessorKey: 'content_identity',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        // <span>{dayjs.unix(row.created_at).format('DD/MM/YYYY')}</span>
+                        <span>{row.content_identity}</span>
+                    )
+                },
+            },
+            {
                 header: 'Category Name',
                 accessorKey: 'category-name',
                 cell: (props) => {
@@ -251,6 +279,27 @@ const VodContentTable = () => {
                     return (
                         // <span>{dayjs.unix(row.created_at).format('DD/MM/YYYY')}</span>
                         <span>{row.category_name}</span>
+                    )
+                },
+            },
+            {
+                header: 'Is Web Series',
+                accessorKey: 'is_tv_series',
+                cell: (props) => {
+                    const row = props.row.original
+                    const is_tv_series = Number(row.is_tv_series)
+
+                    return (
+                        <div className="flex items-center">
+                            <Badge
+                                className={webSeriesColor[is_tv_series].dotClass}
+                            />
+                            <span
+                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${webSeriesColor[is_tv_series].textClass}`}
+                            >
+                                {webSeriesColor[is_tv_series].label}
+                            </span>
+                        </div>
                     )
                 },
             },
@@ -277,73 +326,13 @@ const VodContentTable = () => {
             },
 
             {
-                header: 'Is Transcoded',
-                accessorKey: 'is-transcoded',
-                cell: (props) => {
-                    const row = props.row.original
-                    // const is_transcoded=Number(row.is_premium)
-                    const is_transcoded =
-                        Number(row.is_transcoded) == 1 &&
-                        row.transcoding_start_time &&
-                        row.transcoding_end_time
-                            ? 1
-                            : 0
-
-                    return (
-                        <div className="flex items-center">
-                            <Badge
-                                className={
-                                    transcodedColor[is_transcoded].dotClass
-                                }
-                            />
-                            <span
-                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${transcodedColor[is_transcoded].textClass}`}
-                            >
-                                {transcodedColor[is_transcoded].label}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-
-            {
-                header: 'VOD Status',
-                accessorKey: 'status',
-                cell: (props) => {
-                    const row = props.row.original
-                    // const is_transcoded=Number(row.is_premium)
-                    const success =
-                        row.content_file_name
-                            ? 1
-                            : 0
-
-                    return (
-                        <div className="flex items-center">
-                            <Badge
-                                className={
-                                    vodStatusColor[success].dotClass
-                                }
-                            />
-                            <span
-                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${vodStatusColor[success].textClass}`}
-                            >
-                                {vodStatusColor[success].label}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-
-            {
                 header: 'Status',
                 accessorKey: 'is_active',
                 cell: (props) => {
                     const row = props.row.original
                     // const status=Number(row.is_active)
-                    const status =
-                        Number(row.is_active) && Number(row.is_approved) == 1
-                            ? 1
-                            : 0
+                    const status = Number(row.is_active)
+
 
                     return (
                         <div className="flex items-center">

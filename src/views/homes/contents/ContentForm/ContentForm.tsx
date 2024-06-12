@@ -1,4 +1,4 @@
-import { Dispatch, forwardRef, SetStateAction, useState } from 'react'
+import { Dispatch, forwardRef, SetStateAction, useEffect, useState } from 'react'
 import { FormContainer } from '@/components/ui/Form'
 import Button from '@/components/ui/Button'
 import hooks from '@/components/ui/hooks'
@@ -15,18 +15,23 @@ import DateTimeFields from '@/views/homes/contents/ContentForm/DateTimeFields'
 import ContentDetailsFields from '@/views/homes/contents/ContentForm/ContentDetailsFields'
 import CategoryFields from '@/views/homes/contents/ContentForm/CategoryFields'
 import CdnSection from '@/views/homes/contents/ContentForm/CdnSection'
+import WebSeriesSection from '@/views/homes/contents/ContentForm/WebSeriesSection'
+import { apiGetContentsHomeData } from '@/services/ContentService'
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
 
 type InitialData = {
     tags?: string[]
+    genre?: string[]
     mediaUrl?: string
 }
 
-export type FormModel = Omit<InitialData, 'tags'> & {
+export type FormModel = Omit<InitialData, 'genre'> & {
     tags: { label: string; value: string }[] | string[]
+    genre: { label: string; value: string }[] | string[]
 }
+
 
 export type SetSubmitting = (isSubmitting: boolean) => void
 
@@ -47,6 +52,7 @@ const validationSchema = Yup.object().shape({
     content_description: Yup.string().required('Content Description Required'),
     category_id: Yup.string().required('Category ID Required'),
     content_type: Yup.string().required('Content Type Required'),
+    content_identity: Yup.string().required('Content Identity Required'),
 })
 
 const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
@@ -98,50 +104,67 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
 
 const ContentForm = forwardRef<FormikRef, ContentForm>((props, ref) => {
     const [isSubmitDisabled, setSubmitDisabled] = useState(false)
+    const [contentHomeData, setContentHomeData] = useState<any>()
+
+    const getContentHomeData = async () => {
+        try {
+            const response = await apiGetContentsHomeData({})
+            setContentHomeData(response.data)
+        } catch (error) {
+            console.error('Error fetching home data:', error)
+        }
+    }
+
+    useEffect(() => {
+        getContentHomeData()
+    }, [])
 
     const {
         type,
         initialData = {
-            is_cdn_active: '',
             content_name: '',
             content_description: '',
+            content_identity: '',
             content_type: 'VOD',
-            feature_banner: '',
-            mobile_logo: '',
-            mobile_thumbnail: '',
-            web_logo: '',
-            web_thumbnail: '',
-            stb_logo: '',
-            stb_thumbnail: '',
             is_active: '',
-            is_approved: '',
+            is_adult: '',
+            is_premium: '',
             category_id: '',
             category_name: '',
-            sub_category_id: '',
-            sub_category_name: '',
-            content_expire_time: '',
-            content_publish_time: '',
-            is_premium: '',
-            orientation: '2',
-            content_file_name: '',
-            duration: '',
-            content_drm_dash_url: '',
-            content_drm_hls_url: '',
+            subcategory_id: '',
+            subcategory_name: '',
+            keywords: '',
+            genre: [],
             tags: [],
-            cdn_gmc_conf: [],
-            is_drm_active: '',
-            mediaUrl: '',
-            signingType: '',
-            expireTimeInHours: '',
-            keyName: '',
-            privateKey: '',
+            home_page_link: '',
+            language: '',
+            size: '',
+            actors: '',
+            file_location: '',
+            last_air_date: '',
+            quality: '',
+            rating: '',
+            release_year: '',
+            release_date: '',
+            is_trailer_available: '',
+            trailer_uri:'',
+            is_tv_series:'',
+            tv_series_id:'',
+            tv_series_name:'',
+            season_name:'',
+            episode_number:'',
+            episode_identity:'',
+            overview:'',
+            poster:'',
+            backdrops_poster:'',
+
         },
         onFormSubmit,
         onDiscard,
         onDelete,
     } = props
 
-    const tagsString: any = initialData?.tags
+    const tagsString: any = initialData?.genre
 
     const tagsArray =
         typeof tagsString === 'string'
@@ -158,6 +181,7 @@ const ContentForm = forwardRef<FormikRef, ContentForm>((props, ref) => {
                 initialValues={{
                     ...initialData,
                     tags: tagsArray,
+                    genre: tagsArray,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values: FormModel, { setSubmitting }) => {
@@ -188,21 +212,17 @@ const ContentForm = forwardRef<FormikRef, ContentForm>((props, ref) => {
                                         values={values}
                                         setSubmitDisabled={setSubmitDisabled}
                                     />
-                                    <DateTimeFields
-                                        touched={touched}
-                                        errors={errors}
-                                        values={values}
-                                    />
+
+                                    {/*<DateTimeFields*/}
+                                    {/*    touched={touched}*/}
+                                    {/*    errors={errors}*/}
+                                    {/*    values={values}*/}
+                                    {/*/>*/}
                                     <CategoryFields
                                         touched={touched}
                                         errors={errors}
                                         values={values}
-                                        type={type}
-                                    />
-                                    <CdnSection
-                                        touched={touched}
-                                        errors={errors}
-                                        values={values}
+                                        contentHomeData={contentHomeData}
                                         type={type}
                                     />
                                     <ContentDetailsFields
@@ -210,6 +230,20 @@ const ContentForm = forwardRef<FormikRef, ContentForm>((props, ref) => {
                                         errors={errors}
                                         values={values}
                                     />
+                                    <WebSeriesSection
+                                        touched={touched}
+                                        errors={errors}
+                                        values={values}
+                                        contentHomeData={contentHomeData}
+                                        type={type}
+                                    />
+                                    {/*<CdnSection*/}
+                                    {/*    touched={touched}*/}
+                                    {/*    errors={errors}*/}
+                                    {/*    values={values}*/}
+                                    {/*    type={type}*/}
+                                    {/*/>*/}
+
                                 </div>
 
                                 <div className="lg:col-span-1 grid row-span-3">

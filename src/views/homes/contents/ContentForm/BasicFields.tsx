@@ -41,12 +41,12 @@ type Options = {
 type FormFieldsName = {
     content_name: string
     content_description: string
-    content_file_name: string
-    duration: string
+    content_identity: string
+    is_adult: boolean
     is_active: boolean
     is_premium: string
-    content_tags: string
     content_type: string
+
 }
 
 type FieldsProps = {
@@ -55,12 +55,13 @@ type FieldsProps = {
     setSubmitDisabled: Dispatch<SetStateAction<boolean>>
 
     values: {
-        is_premium: string
-        is_active: boolean
         content_name: string
+        content_description: string
+        content_identity: string
+        is_adult: boolean
+        is_active: boolean
+        is_premium: string
         content_type: string
-        content_file_name: string
-        duration: string
         roles: Options
         [key: string]: unknown
     }
@@ -155,7 +156,17 @@ const BasicFields = (props: FieldsProps) => {
                     videoElement.addEventListener('loadedmetadata', () => {
                         const duration = videoElement.duration;
                         const formattedDuration = formatDuration(duration);
-                        form.setFieldValue('duration', formattedDuration)
+                        form.setFieldValue('runtime', formattedDuration)
+
+
+                        const fileSizeInBytes = videoFile.size;
+
+
+
+                        console.log(`File size: ${fileSizeInBytes.toFixed(2)} Bytes`);
+
+
+                        form.setFieldValue('size', `${fileSizeInBytes.toFixed(2)} Bytes`);
                     });
                     setFileStatus({ [videoFile.name]: 'Uploaded' })
                     form.setFieldValue(field.name, fileName)
@@ -245,7 +256,7 @@ const BasicFields = (props: FieldsProps) => {
             <h5>Basic Information</h5>
             <p className="mb-6">Section to config the contents attribute</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="col-span-2">
+                <div className="col-span-1">
 
                     <FormItem
                         asterisk
@@ -261,6 +272,26 @@ const BasicFields = (props: FieldsProps) => {
                             autoComplete="off"
                             name="content_name"
                             placeholder="Content Name"
+                            component={Input}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+
+                    <FormItem
+                        asterisk
+                        label="Content Identity"
+                        invalid={
+                            (errors.content_identity &&
+                                touched.content_identity) as boolean
+                        }
+                        errorMessage={errors.content_identity}
+                    >
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="content_identity"
+                            placeholder="Content Identity"
                             component={Input}
                         />
                     </FormItem>
@@ -361,6 +392,28 @@ const BasicFields = (props: FieldsProps) => {
                                     }
                                 >
                                     Is Premium
+                                </Checkbox>
+                            )}
+                        />
+                    </FormItem>
+                </div>
+                <div className="col-span-1">
+                    <FormItem label="Is Adult">
+                        <Field
+                            className="mb-0"
+                            name="is_adult"
+                            render={({ field, form }: FieldProps) => (
+                                <Checkbox
+                                    {...field}
+                                    checked={field.value === 1}
+                                    onChange={() =>
+                                        form.setFieldValue(
+                                            field.name,
+                                            field.value === 1 ? 0 : 1
+                                        )
+                                    }
+                                >
+                                    Is Adult
                                 </Checkbox>
                             )}
                         />

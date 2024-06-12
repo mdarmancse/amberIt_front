@@ -28,16 +28,15 @@ import type {
 
 type Data = {
     id: number
-    is_approved: boolean
     is_active: boolean
-    is_transcoded: boolean
+    is_tv_series: boolean
     is_premium: boolean
     content_name: string
     created_at: number
     updated_at: number
     category_name: string
-    transcoding_start_time: number
-    transcoding_end_time: number
+    content_identity: string
+
     status: number
 }
 const transcodedColor: Record<
@@ -218,6 +217,17 @@ const LiveChannelTable = () => {
             },
 
             {
+                header: 'Content Identity',
+                accessorKey: 'content_identity',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        // <span>{dayjs.unix(row.created_at).format('DD/MM/YYYY')}</span>
+                        <span>{row.content_identity}</span>
+                    )
+                },
+            },
+            {
                 header: 'Category Name',
                 accessorKey: 'category-name',
                 cell: (props) => {
@@ -251,45 +261,13 @@ const LiveChannelTable = () => {
             },
 
             {
-                header: 'Is Transcoded',
-                accessorKey: 'is-transcoded',
-                cell: (props) => {
-                    const row = props.row.original
-                    // const is_transcoded=Number(row.is_premium)
-                    const is_transcoded =
-                        Number(row.is_transcoded) == 1 &&
-                        row.transcoding_start_time &&
-                        row.transcoding_end_time
-                            ? 1
-                            : 0
-
-                    return (
-                        <div className="flex items-center">
-                            <Badge
-                                className={
-                                    transcodedColor[is_transcoded].dotClass
-                                }
-                            />
-                            <span
-                                className={`ml-2 rtl:mr-2 capitalize font-semibold ${transcodedColor[is_transcoded].textClass}`}
-                            >
-                                {transcodedColor[is_transcoded].label}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-
-            {
                 header: 'Status',
                 accessorKey: 'is_active',
                 cell: (props) => {
                     const row = props.row.original
                     // const status=Number(row.is_active)
-                    const status =
-                        Number(row.is_active) && Number(row.is_approved) == 1
-                            ? 1
-                            : 0
+                    const status = Number(row.is_active)
+
 
                     return (
                         <div className="flex items-center">

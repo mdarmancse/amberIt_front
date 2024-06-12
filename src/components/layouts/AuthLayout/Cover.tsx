@@ -16,7 +16,7 @@ const Cover = ({ children, content, ...rest }: CoverProps) => {
                 className="col-span-6 bg-no-repeat bg-cover py-6 px-16 flex-col justify-between bg-white dark:bg-gray-800 hidden lg:flex "
                 // className="bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
                 style={{
-                    backgroundImage: `url('/img/others/auth-cover-bg.webp')`,
+                    backgroundImage: `url('/img/others/auth-cover-bg.png')`,
                 }}
             >
 
