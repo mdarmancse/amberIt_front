@@ -45,7 +45,7 @@ const InterestTableTools = () => {
                     Add Interest
                 </Button>
             </Link>
-            {/*<SubCategoryTableSearch />*/}
+            <InterestTableSearch />
         </div>
     )
 }

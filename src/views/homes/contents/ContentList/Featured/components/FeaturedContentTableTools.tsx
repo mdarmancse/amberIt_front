@@ -3,6 +3,7 @@ import { HiDownload, HiOutlineTrash, HiPlusCircle } from 'react-icons/hi'
 import FeaturedContentTableSearch from './FeaturedContentTableSearch'
 import { setDeleteMode, useAppDispatch, useAppSelector } from '../store'
 import { Link } from 'react-router-dom'
+import FeaturedTableSearch from '@/views/homes/contents/ContentList/Featured/components/FeaturedTableSearch'
 
 const BatchDeleteButton = () => {
     const dispatch = useAppDispatch()
@@ -43,7 +44,7 @@ const FeaturedContentTableTools = () => {
                     Add Content
                 </Button>
             </Link>
-            {/*<FeaturedContentTableSearch />*/}
+            <FeaturedTableSearch />
         </div>
     )
 }

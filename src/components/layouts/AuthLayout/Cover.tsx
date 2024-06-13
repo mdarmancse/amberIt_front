@@ -10,18 +10,16 @@ interface CoverProps extends CommonProps {
 
 const Cover = ({ children, content, ...rest }: CoverProps) => {
     return (
-        <div className="grid lg:grid-cols-12 h-full">
+        <div className="grid lg:grid-cols-12 h-full rounded shadow-rose-400 ">
 
             <div
-                className="col-span-6 bg-no-repeat bg-cover py-6 px-16 flex-col justify-between bg-white dark:bg-gray-800 hidden lg:flex "
-                // className="bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
+                className="col-span-6  bg-no-repeat  bg-cover xl:min-w-[450px] px-8 flex-col justify-between bg-white dark:bg-gray-800 hidden lg:flex shadow-2xl  "
                 style={{
                     backgroundImage: `url('/img/others/auth-cover-bg.png')`,
-                }}
-            >
-
+                }}>
 
             </div>
+
             <div className="col-span-6 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
                 <div className="xl:min-w-[450px] px-8">
                     <Logo mode="dark" />

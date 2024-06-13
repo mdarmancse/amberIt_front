@@ -45,7 +45,7 @@ const MenuTableTools = () => {
                     Add Menu
                 </Button>
             </Link>
-            {/*<SubCategoryTableSearch />*/}
+            <MenuTableSearch />
         </div>
     )
 }

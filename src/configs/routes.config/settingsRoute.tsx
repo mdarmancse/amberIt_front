@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 import { APP_PREFIX_PATH, SETTING_PREFIX_PATH } from '@/constants/route.constant'
-import { ADMIN, SUPER_ADMIN } from '@/constants/roles.constant'
+import { ADMIN, EDITOR, MANAGER, SUPER_ADMIN } from '@/constants/roles.constant'
 import type { Routes } from '@/@types/routes'
 
 // @ts-ignore
@@ -116,6 +116,37 @@ const settingsRoute: Routes = [
         authority: [SUPER_ADMIN],
         meta: {
             header: 'Create Menu',
+        },
+    },
+
+    {
+        key: 'settings.settings',
+        menu_id: ['59'],
+        purpose: ['read'],
+        path: `${SETTING_PREFIX_PATH}/settings/setting-list`,
+        component: lazy(() => import('@/views/settings/settings/SettingList')),
+        authority: [SUPER_ADMIN, ADMIN, MANAGER, EDITOR],
+    },
+    {
+        key: 'settings.settingNew',
+        menu_id: ['59'],
+        purpose: ['create'],
+        path: `${SETTING_PREFIX_PATH}/settings/setting-new`,
+        component: lazy(() => import('@/views/settings/settings/SettingNew')),
+        authority: [SUPER_ADMIN, ADMIN],
+        meta: {
+            header: 'Create Setting ',
+        },
+    },
+    {
+        key: 'settings.settingEdit',
+        menu_id: ['59'],
+        purpose: ['edit'],
+        path: `${SETTING_PREFIX_PATH}/settings/setting-edit/:settingId`,
+        component: lazy(() => import('@/views/settings/settings/SettingEdit')),
+        authority: [SUPER_ADMIN, ADMIN],
+        meta: {
+            header: 'Update Setting',
         },
     },
 ]

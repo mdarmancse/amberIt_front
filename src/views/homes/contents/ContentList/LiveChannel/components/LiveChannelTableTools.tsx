@@ -43,7 +43,7 @@ const LiveChannelTableTools = () => {
                     Add Content
                 </Button>
             </Link>
-            {/*<LiveChannelTableSearch />*/}
+            <LiveChannelTableSearch />
         </div>
     )
 }

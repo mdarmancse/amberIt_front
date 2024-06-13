@@ -24,16 +24,16 @@ const NotificationTableSearch = () => {
     const debounceFn = debounce(handleDebounceFn, 500)
 
     function handleDebounceFn(val: string) {
-        // const newTableData = cloneDeep(tableData)
-        // newTableData.query = val
-        // newTableData.pageIndex = 1
-        // if (typeof val === 'string' && val.length > 1) {
-        //     fetchData(newTableData)
-        // }
-        //
-        // if (typeof val === 'string' && val.length === 0) {
-        //     fetchData(newTableData)
-        // }
+        const newTableData = cloneDeep(tableData)
+        newTableData.query = val
+        newTableData.pageIndex = 1
+        if (typeof val === 'string' && val.length > 1) {
+            fetchData(newTableData)
+        }
+
+        if (typeof val === 'string' && val.length === 0) {
+            fetchData(newTableData)
+        }
     }
 
     const fetchData = (data: TableQueries) => {

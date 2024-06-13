@@ -43,7 +43,7 @@ const VodContentTableTools = () => {
                     Add Content
                 </Button>
             </Link>
-            {/*<FeaturedContentTableSearch />*/}
+            <VodContentTableSearch />
         </div>
     )
 }

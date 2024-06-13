@@ -45,7 +45,7 @@ const RoleTableTools = () => {
                     Add Role
                 </Button>
             </Link>
-            {/*<SubCategoryTableSearch />*/}
+            <RoleTableSearch />
         </div>
     )
 }

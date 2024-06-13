@@ -45,7 +45,7 @@ const CategoryTableTools = () => {
                     Add Category
                 </Button>
             </Link>
-            {/*<SubCategoryTableSearch />*/}
+            <CategoryTableSearch />
         </div>
     )
 }

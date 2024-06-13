@@ -2,6 +2,7 @@ import Button from '@/components/ui/Button'
 import {  HiOutlineTrash, HiPlusCircle } from 'react-icons/hi'
 import { setDeleteMode, useAppDispatch, useAppSelector } from '../store'
 import { Link } from 'react-router-dom'
+import ContactTableSearch from '@/views/homes/contacts/ContactList/components/contactTableSearch'
 
 const BatchDeleteButton = () => {
     const dispatch = useAppDispatch()
@@ -44,7 +45,7 @@ const ContactTableTools = () => {
             {/*        Add Interest*/}
             {/*    </Button>*/}
             {/*</Link>*/}
-            {/*<SubCategoryTableSearch />*/}
+            <ContactTableSearch />
         </div>
     )
 }

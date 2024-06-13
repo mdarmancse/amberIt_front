@@ -45,7 +45,7 @@ const UserTableTools = () => {
                     Add User
                 </Button>
             </Link>
-            {/*<UserTableSearch />*/}
+            <UserTableSearch />
         </div>
     )
 }

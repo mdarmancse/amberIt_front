@@ -222,6 +222,36 @@ const homesRoute: Routes = [
         },
     },
 
+    {
+        key: 'webSeries.webSeries',
+        menu_id: ["58"],
+        purpose: ["read"],
+        path: `${APP_PREFIX_PATH}/webSeries/webSeries-list`,
+        component: lazy(() => import('@/views/homes/webSeries/WebSeriesList')),
+        authority: [SUPER_ADMIN,ADMIN,MANAGER,EDITOR],
+    },
+    {
+        key: 'webSeries.webSeriesNew',
+        menu_id: ["58"],
+        purpose: ["create"],
+        path: `${APP_PREFIX_PATH}/webSeries/webSeries-new`,
+        component: lazy(() => import('@/views/homes/webSeries/WebSeriesNew')),
+        authority: [SUPER_ADMIN,ADMIN],
+        meta: {
+            header: 'Create Web Series ',
+        },
+    },
+    {
+        key: 'webSeries.webSeriesEdit',
+        menu_id: ["58"],
+        purpose: ["edit"],
+        path: `${APP_PREFIX_PATH}/webSeries/webSeries-edit/:webSeriesId`,
+        component: lazy(() => import('@/views/homes/webSeries/WebSeriesEdit')),
+        authority: [SUPER_ADMIN,ADMIN],
+        meta: {
+            header: 'Update Web Series',
+        },
+    },
 
     {
         key: 'movie-request.movie-request',

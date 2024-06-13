@@ -48,7 +48,7 @@ const NotificationTableTools = () => {
                     Send Notification
                 </Button>
             </Link>
-            {/*<NotificationTableSearch />*/}
+            <NotificationTableSearch />
         </div>
     )
 }

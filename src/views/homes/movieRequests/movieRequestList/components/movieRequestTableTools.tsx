@@ -2,6 +2,7 @@ import Button from '@/components/ui/Button'
 import {  HiOutlineTrash, HiPlusCircle } from 'react-icons/hi'
 import { setDeleteMode, useAppDispatch, useAppSelector } from '../store'
 import { Link } from 'react-router-dom'
+import MovieRequestTableSearch from '@/views/homes/movieRequests/movieRequestList/components/movieRequestTableSearch'
 
 const BatchDeleteButton = () => {
     const dispatch = useAppDispatch()
@@ -44,7 +45,7 @@ const MovieRequestTableTools = () => {
             {/*        Add Interest*/}
             {/*    </Button>*/}
             {/*</Link>*/}
-            {/*<SubCategoryTableSearch />*/}
+            <MovieRequestTableSearch />
         </div>
     )
 }

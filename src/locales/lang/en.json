@@ -29,11 +29,15 @@
             "interest-create": "Create Interest",
             "interest-list": "Interests"
         },
+        "webSeries": {
+            "interest-create": "Create Web Series",
+            "interest-list": "Web Series List"
+        },
         "movie-request": {
             "movie-request-list": "Request List"
         },
         "contacts": {
-            "contact-list": "Contacts"
+            "contact-list": "Contacts List"
         },
         "fcm": {
             "notification-create": "Create Notification",
